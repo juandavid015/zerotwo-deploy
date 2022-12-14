@@ -1,0 +1,28 @@
+.page{
+  margin-top: 50px;
+}
+
+.page button {
+  font-weight: 700;
+  font-size: 14px;
+  margin: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.page-link {
+  background-color: #1a0750;
+  box-sizing: border-box;
+  transition: all ease 0.2s;
+}
+
+.page button:hover {
+  background-color: #f1c40f;
+  color: #1a0750;
+}
+
+.page-selected {
+  background-color: #f1c40f;
+  color: #1a0750;
+}
