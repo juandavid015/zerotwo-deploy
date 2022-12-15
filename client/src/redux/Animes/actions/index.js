@@ -1,6 +1,7 @@
 import * as types from "../types";
 import axios from "axios";
-const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:3001';
+const var_Api = process.env.REACT_APP_API_ENDPOINT;
+const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 export const getAllAnimes = ()=> {
   return (dispatch) =>
     axios
@@ -24,6 +25,7 @@ export const getAnimes = () => {
           type: types.GET_ANIMES,
           payload: response.data,
         });
+        console.log('api', API_ENDPOINT)
       })
       .catch((error) => {
         return { error: { message: "Not found" } };
