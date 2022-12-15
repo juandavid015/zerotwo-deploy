@@ -22,7 +22,6 @@ export const getAnimes = () => {
     axios
       .get(`${API_ENDPOINT}/animes`)
       .then((response) => {
-        console.log(response)
         dispatch({
           type: types.GET_ANIMES,
           payload: response.data,

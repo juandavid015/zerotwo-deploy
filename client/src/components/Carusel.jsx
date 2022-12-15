@@ -21,7 +21,7 @@ export default function Carusel() {
   const backImage = () => {
     setImageCurrent(currentImage === amount - 1 ? 0 : currentImage + 1);
   };
-
+  console.log('ANIMES')
   return (
     <div className="center">
       <div className="carusel_cont">
@@ -32,7 +32,7 @@ export default function Carusel() {
 
         <div className="img_carusel_cont fade">
           {animes && animes.map((elem, index) => {
-            console.log(animes)
+            
             return (
               <div key={index}>
                 {currentImage === index && <h2 key={index}>{elem.name}</h2>}
