@@ -2,10 +2,11 @@ import * as types from "../types";
 import axios from "axios";
 const var_Api = process.env.REACT_APP_API_ENDPOINT;
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
+const stringApi = 'https://zerotwo-deploy-production.up.railway.app/'
 export const getAllAnimes = ()=> {
   return (dispatch) =>
     axios
-      .get(`${API_ENDPOINT}/animes?page=1`)
+      .get(`${stringApi}/animes?page=1`)
       .then((response) => {
         dispatch({
           type: types.GET_ALL_ANIMES,
