@@ -4,7 +4,7 @@ const var_Api = process.env.REACT_APP_API_ENDPOINT;
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
 export const getAllAnimes = ()=> {
-  return (dispatch) =>
+  return async(dispatch) =>
     axios
       .get(`${API_ENDPOINT}/animes?page=1`)
       .then((response) => {
@@ -18,7 +18,7 @@ export const getAllAnimes = ()=> {
       });
 }
 export const getAnimes = () => {
-  return (dispatch) =>
+  return async(dispatch) =>
     axios
       .get(`${API_ENDPOINT}/animes`)
       .then((response) => {
