@@ -32,6 +32,7 @@ export default function Carusel() {
 
         <div className="img_carusel_cont fade">
           {animes && animes.map((elem, index) => {
+            console.log(animes)
             return (
               <div key={index}>
                 {currentImage === index && <h2 key={index}>{elem.name}</h2>}

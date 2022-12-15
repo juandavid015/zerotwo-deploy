@@ -12,6 +12,9 @@ import { useSelector } from "react-redux";
 export default function LandingPage() {
   const allAnimes = useSelector((state) => state.allAnimes);
   const newestAnimes = useSelector((state) => state.animeNewest);
+
+  console.log('ALL ANIMES', allAnimes);
+  console.log('NEWEST', newestAnimes)
   return (
     <div>
       <div></div>
