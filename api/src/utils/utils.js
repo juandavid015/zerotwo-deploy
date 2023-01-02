@@ -7,28 +7,10 @@ const axios = require('axios');
 //   "Accept": "application/vnd.api+json",
 //   "Content-Type": "application/vnd.api+json"
 // };
-
-exports.getAllAnime = async () => {  
-  try {
-    const numberOfRequests = 10;
-    
-    let allAnimes = [];
-    let offset = 0;
-    for(let i = 0; i < numberOfRequests; i++) {
-      
-      // const info = await fetch(`https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=${offset}`).then(response => response.json()).then(data => data.data);
-      const info = await axios.get(`https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=${offset}`,{headers: {
-    "accept-encoding": "*",
-  }});
-
-
-      info.data.data.map(async (animeApi) => {
-        const genresApi = await axios.get(animeApi.relationships.genres.links.related, {headers: {
-          "accept-encoding": "*",
-        }});
-        let anime = {}
+const createAnimeObject = (animeApi, genresApi) => {
+  let anime = {}
         anime.id = animeApi.id;
-        anime.name = animeApi.attributes.titles.en ? animeApi.attributes.titles.en : animeApi.attributes.titles.en_jp;
+        anime.name = animeApi.attributes.titles.en ? animeApi.attributes.titles.en : animeApi.attributes.titles.en_jp ? animeApi.attributes.titles.en_jp : "No hay nombre";
         anime.userCount = animeApi.attributes.userCount;
         anime.synopsis = animeApi.attributes.synopsis;
         anime.averageRating = animeApi.attributes.averageRating;
@@ -38,7 +20,7 @@ exports.getAllAnime = async () => {
         anime.popularityRank = animeApi.attributes.popularityRank;
         anime.ratingRank = animeApi.attributes.ratingRank;
         anime.status = animeApi.attributes.status;
-        anime.posterImage = animeApi.attributes.posterImage.original; // va original
+        anime.posterImage = animeApi.attributes.posterImage?.original; // va original
         anime.coverImage = animeApi.attributes.coverImage? animeApi.attributes.coverImage.original : null; // va original
         anime.episodeCount = animeApi.attributes.episodeCount;
         anime.episodeLength = animeApi.attributes.episodeLength;
@@ -49,7 +31,30 @@ exports.getAllAnime = async () => {
         anime.ageRatingGuide = animeApi.attributes.ageRatingGuide;
         anime.genres = genresApi.data.data.map(genre => genre.id);
         
+        return anime
+}
+exports.getAllAnime = async () => {  
+  try {
+  
+    let allAnimes = [];
+    const numberOfRequests = 12;
+
+    let offset = 0;
+    for(let i = 0; i < numberOfRequests; i++) {
       
+      // const info = await fetch(`https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=${offset}`).then(response => response.json()).then(data => data.data);
+      const info = await axios.get(`https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=${offset}
+      ${i >4  && i <=9 ? '&sort=-userCount': i > 9 ? '': '&filter[status]=current&sort=-averageRating'}`,{headers: {
+    "accept-encoding": "*",
+  }});
+
+
+      info.data.data.map(async (animeApi) => {
+        const genresApi = await axios.get(animeApi.relationships.genres.links.related, {headers: {
+          "accept-encoding": "*",
+        }});
+        
+        let anime = createAnimeObject(animeApi, genresApi)
         allAnimes.push(anime);
         
       });
@@ -60,7 +65,7 @@ exports.getAllAnime = async () => {
     return allAnimes;
 
   } catch (error) {
-    return "ESTO ES ERROR UTILS " + error.message;
+    throw new Error(error.message);
   }
 }
 
@@ -81,7 +86,7 @@ exports.getAllGenres = async (limitOfGenres = 62) => {
   
     return genres
   } catch (error) {
-    return error.message;
+    throw new Error(error.message);
   }
 }
 
@@ -165,7 +170,33 @@ exports.getAllEpisodes = async (id) => {
 		return allEpisodesAnime;
 
   	} catch (error) {
-    	return error.message;
+    	throw new Error(error.message);
   	}
 }
-// getApiData().then(info => console.log(info));
+
+exports.getEpisode= async (idAnime, idEpisode) => {
+  try {
+    let apiAnime = await axios.get(`https://kitsu.io/api/edge/anime/${idAnime}`, {headers: {
+			"accept-encoding": "*",
+    	}});
+    let apiEpisode = await axios.get(`https://kitsu.io/api/edge/episodes/${idEpisode}`, {headers: {
+			"accept-encoding": "*",
+    	}});
+      let ep = apiEpisode.data.data;
+      let anime = apiAnime.data.data;
+      let episode = {};
+      episode.id = ep.id;
+      episode.title = ep.attributes.titles.en_us? ep.attributes.titles.en_us : ep.attributes.titles.en_jp;
+      episode.synopsis = ep.attributes.synopsis;
+      episode.number = ep.attributes.number;
+      episode.seasonNumber = ep.attributes.seasonNumber;
+      episode.airdate = ep.attributes.airdate;
+      episode["length"] = ep.attributes["length"];
+      episode.thumbnail = ep.attributes.thumbnail? ep.attributes.thumbnail : null; 
+      episode.coverImage = anime.attributes.coverImage? anime.attributes.coverImage.original : null;
+    return episode
+
+  } catch (err) {
+    throw new Error(err.message);
+  }
+}
