@@ -1,7 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import LandingPage from "./components/LandingPage";
-import Dashboard from "./components/Dashboard";
 import Footer from "./components/Footer";
 import AnimeDetail from "./components/Animedetail";
 import { useDispatch, useSelector } from "react-redux";
