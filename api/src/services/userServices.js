@@ -6,7 +6,7 @@ const sendEmail  =require ('../utils/sendEmail.js');
 const comparePassword = require('../utils/comparePassword.js');
 const { Op } = require('sequelize');
 const dotenv = require('dotenv').config();
-
+const CLIENT_ORIGIN_URL = process.env.CLIENT_ORIGIN_URL;
 
 exports.getUserInfoWithGoogle = async (email) => {
   try {
@@ -151,7 +151,7 @@ exports.createUser = async (user) => {
       let token = generateToken({ email: user.email });
       console.log(token);
       console.log(user);
-      const message = `${"http://localhost:3001"}/user/verify/${email}/${token}`;
+      const message = `${CLIENT_ORIGIN_URL || 'http://localhost:3001'}/user/verify/${email}/${token}`;
       await sendEmail(email, "Zero Two: Verify your account", message);
       return userCreated;
     }
