@@ -36,7 +36,9 @@
     font-size: 15px;
 }
 
-
+.cardPlan h3 {
+  color: var(--main-color-font-dark);
+}
 
 .cardPlan ul li:before {
   content: "✓";

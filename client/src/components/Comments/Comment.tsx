@@ -69,7 +69,6 @@ export default function Comment ({id, replyingTo, content, rating, likes, spoile
     }
 
     const editPost = (idEpisode: number, idComment: number, post: CommentInterface) => {
-        alert('edited');
         dispatch(editComment(idEpisode, idComment, post)).then((val) => {
             dispatch(getEpisodeComments(id_episode));
             setIsEditing(!isEditing);  
