@@ -1,6 +1,6 @@
 .log {
-  color: white;
-  background-color: #ffc989;
+  color: var(--main-bg-color-light);
+  background-color: var(--secondary-color-items-1);
   font-size: 16px;
   padding: 6px;
   height: 44px;
@@ -9,10 +9,11 @@
   margin-top: 2px;
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 .type{
-  color: #1a0750;
+  color: var(--main-color-font-dark);
 }
 
 .iconDown{
@@ -21,15 +22,15 @@
 }
 
 .iconUser{
-  background-color: white;
+  background-color: var(--main-bg-color-light);
   padding: 4px 4px;
-  color: #1a0750;
+  color: var(--main-color-font-dark);
   border-radius: 20px;
 }
 
 .medal{
   margin-left: 10px;
-  color: #1a056d;
+  color: var(--main-color-font-dark);
 }
 
 
@@ -47,7 +48,7 @@
   justify-content: center;
   align-items: center;
   row-gap: .1em;
-  color: black;
+  color: var(--main-bg-color-dark);
 }
 
 
@@ -59,7 +60,7 @@
 
 .button-dropdown{
   background-color: transparent;
-  color: black;
+  color: var(--main-bg-color-dark);
   border: 0;
   display: flex;
   cursor: pointer;
@@ -75,32 +76,46 @@
   height: 0px;
   opacity: 0;
   overflow: hidden;
-  width: 6.5em;
-  border-radius: 6px;
+  width: 9em;
+  padding: 0em 1em 0em 1em;
+  font-size: 15px;
   transition: all ease .5s;
 }
 
 .nav-dropdown.isActive{
-  min-width: 130px;
-  height: 120px;
+  height: 100px;
   opacity: 1;
   margin-top: 1em;
-  background-color: white;
+  background-color: var(--main-color-content);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.329);
 }
 
 .ul-dropdown{
   display: flex;
   flex-flow: column wrap;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  column-gap: 1em;
+  row-gap: 1em;
 }
 
 .li-dropdown{
+  width: auto;
   list-style: none;
-  margin: .5em 0em;
-  cursor: pointer;
   position: relative;
-  color: black;
+  display: flex;
+  column-gap: .5em;
+  opacity: .7;
+  color: var(--main-color-font-dark);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+}
+
+.li-dropdown:hover{
+  opacity: 1;
 }
 
 .li-dropdown:after{
@@ -112,7 +127,7 @@
   left: -1px;
   transform: scaleX(0);
   box-shadow:
-    0 10px 0 #47037c;
+    0 10px 0 var(--secondary-color-content-3);
   transform-origin: bottom right;
   transition: transform 0.5s ease-out;
 }
@@ -123,9 +138,19 @@
 }
 
 .a-dropdown{
+  /* display: flex;
+  column-gap: .5em; */
   text-decoration: none;
-  color: black;
+  cursor: pointer;
+  width: 100%;
+  color: var(--main-color-font-dark);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
+
+
 
 .down {
   width: 1.2em;

@@ -1,39 +1,47 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import AnimeCards from "./AnimeCards";
-import SearchBar from "../SearchBar";
-import Pagination from "../Paginated";
+import SearchBar from "../NavBar/SearchBar";
+import Pagination from "./Paginated";
 import style from "../../style/AnimesPage/AnimeList.module.css";
-import Filters from "../Filters";
+import Filters from "./Filters";
 import { useLocation } from "react-router-dom";
-import { getAllAnimes, getAnimes} from "../../redux/actions";
-import Sorts from "../Sorts";
+import { getAnimeNewest, getAnimes, getAnimeTrending} from "../../redux/actions";
+import Sorts from "./Sorts";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import Loading from "../Loading";
-import NotFound from "../NotFound";
+import Loading from "../UtilsComponents/Loading";
+import NotFound from "../UtilsComponents/NotFound";
 import { Anime } from "../../types/types";
 import { isError } from "../../types/typeGuards";
+import { useParams } from "react-router-dom";
 
 export interface FilterParams {
   genres: string
 }
 
-interface err {
-  message: string
-}
 export const AnimeList = () => {
 
-  const allAnimes = useAppSelector((state) => state['allAnimes']);
+  const {option} = useParams();
+
+ 
+
   const animes = useAppSelector((state) => state['animes']);
+  const animeNewest = useAppSelector((state) => state['animeNewest'])
+  const animeTrending = useAppSelector((state) => state['animesTrending'])
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
 
+  const [active, setActive] = useState('all');
+
   let {search} = useLocation();
   let searchParams = new URLSearchParams(search);
-  let allAnimeQuery: string | URLSearchParams = new URLSearchParams(search);
-  allAnimeQuery.delete('page');
-  allAnimeQuery = allAnimeQuery.toString();
-  allAnimeQuery = decodeURIComponent(allAnimeQuery)
 
+  // let allAnimeQuery: URLSearchParams | string = useMemo(()=> {
+  //   return new URLSearchParams(search)
+  // },[search]);
+  // allAnimeQuery.delete('page');
+  // allAnimeQuery = allAnimeQuery.toString()
+
+ 
   let page = searchParams.get('page') || 1;
   let name = searchParams.get('name') || '';
   let genres = searchParams.get('genres');
@@ -41,18 +49,39 @@ export const AnimeList = () => {
   let filters:FilterParams = {
     genres: genres || ''
   }
-  let totalPages = isError(allAnimes) ? 0 : Math.ceil(allAnimes.length / 15);
+  // let totalPages = isError(allAnimes) ? 0 : Math.ceil(allAnimes.length / 15);
+  const animesToDisplay = useMemo(()=> {
+    let list = active==='all' ? animes : active==='newest' ? animeNewest: animeTrending;
+    return list
+  },[animeNewest , animes, animeTrending, active]);
+  
+  let totalPages = isError(animesToDisplay) ? 0 : animesToDisplay.count / 15;
 
   useEffect(() => {
-    setLoading(true);
     window.scrollTo({top: 0, behavior: "smooth"});
-    dispatch(getAllAnimes(typeof allAnimeQuery === 'string' ? allAnimeQuery: ''))
-    dispatch(getAnimes(search)).finally(()=> {
-      setLoading(false)
-    })
- 
-  },[dispatch, search, allAnimeQuery]);
-  // console.log('search', search)
+    
+      if(option === 'newest') {
+        setLoading(true);
+        dispatch(getAnimeNewest(search)).finally(()=> {
+          setActive(()=> 'newest')
+          setLoading(false)
+        })
+      } else if (option === 'trending'){
+        setLoading(true);
+        dispatch(getAnimeTrending(search)).finally(()=> {
+          setActive(()=> 'trending')
+          setLoading(false)
+        })
+      }else {
+        setLoading(true);
+        dispatch(getAnimes(search)).finally(()=> {
+          setActive(()=> 'all')
+          setLoading(false)
+        })
+      }
+      
+   
+  },[dispatch, search, option]);
   return (
   
     <div className={style["container"]} >
@@ -64,13 +93,13 @@ export const AnimeList = () => {
           <Sorts query={search} sort={sort}/>
         </div>
 
-        <SearchBar searchName={name}/>
+        <SearchBar styleWidth={false} searchName={name}/>
       </div>
       
-      {loading ? <Loading />: isError(animes) ? <NotFound msg={animes.error.message} /> :
+      {loading ? <Loading />: isError(animesToDisplay) ? <NotFound msg={animesToDisplay.error.message} /> :
       
       <div className={style["card-container"]}>
-      {animes?.map((a: Anime, i: number) => {
+      {animesToDisplay.rows?.map((a: Anime, i: number) => {
         return (
           <div className={style["recipe-card"]} key={i}>
             <div className={style["container-card"]}>

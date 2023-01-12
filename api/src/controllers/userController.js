@@ -1,5 +1,20 @@
 const userServices = require('../services/userServices');
 
+
+exports.getUser= async (req, res) => {
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1]
+    let email = req.body.email;
+    try {
+        const user = await userServices.getUserInfo(token, email);
+        res.status(200).send(user);
+        
+    } catch (err) {
+        console.log(err)
+        res.status(404).send(err.message)
+    }
+}
+
 exports.getUserWithGoogle = async (req, res) => {
     let userEmail = req.user['https://example.com/email']
     try {
@@ -7,17 +22,19 @@ exports.getUserWithGoogle = async (req, res) => {
         res.status(200).send(user);
         
     } catch (err) {
+        console.log(err)
         res.status(404).send(err.message)
     }
 }
-exports.getUser = async (req, res) => {
+exports.loginUser = async (req, res) => {
     const userEmail = req.body.email;
     const userPassword = req.body.password;
-    
+
     try {
-        const user = await userServices.getUserInfo(userEmail, userPassword);
+        const user = await userServices.loginUser(userEmail, userPassword);
         res.status(200).send(user);
     } catch (err) {
+        console.log(err)
         res.status(404).send(err.message)
     }
 }
@@ -40,6 +57,7 @@ exports.createUser = async (req, res) => {
         const userCreated = await userServices.createUser(user);
         res.status(201).send({msg: 'You are almost ready, please verify you email', data: userCreated});
     } catch (err) {
+        console.log('ERROR CONTROLLER: ', err)
         res.status(409).send(err.message)
     }
 }
@@ -49,6 +67,27 @@ exports.deleteUser = async (req, res) => {
     try {
         const userDeleted = await userServices.deleteUser(userId)
         res.status(200).send({message: userDeleted})
+    } catch (err) {
+        res.status(404).send(err.message)
+    }
+}
+
+exports.searchUsers  = async (req, res) => {
+    const name = req.query.name;
+    try {
+        const userSearch = await userServices.searchuser(name)
+        res.status(200).send(userSearch)
+    } catch (err) {
+        res.status(404).send(err.message)
+    }
+}
+
+exports.patchUser  = async (req, res) => {
+    const userId = req.params.userId
+    const settings = req.body;
+    try {
+        const userModified = await userServices.modifyUser(userId, settings)
+        res.status(200).send(userModified)
     } catch (err) {
         res.status(404).send(err.message)
     }

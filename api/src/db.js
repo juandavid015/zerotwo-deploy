@@ -31,17 +31,31 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { Anime, Genre, Review,Episodes,User} = sequelize.models;
+const { Anime, Genre, Review, List, User, Like} = sequelize.models;
 
  // Aca vendrian las relaciones
- Anime.belongsToMany(Genre, { through: 'anime_genre' });//relacion de muchos a muchos generos y animes
- Genre.belongsToMany(Anime, { through: 'anime_genre' }); 
- 
-  User.hasMany(Review)
-  Review.belongsTo(User);
+Anime.belongsToMany(Genre, { through: 'anime_genre' });//relacion de muchos a muchos generos y animes
+Genre.belongsToMany(Anime, { through: 'anime_genre' }); 
 
- Review.hasMany(Review) 
- Review.belongsTo(Review, {foreignKey: 'reply_id', as: 'Reply'})
+User.hasMany(Review);
+Review.belongsTo(User);
+
+Review.hasMany(Review, {as: "Replies" ,foreignKey: 'reply_id', }) 
+Review.belongsTo(Review, {foreignKey: 'reply_id', as: 'Parent'})
+ 
+User.hasMany(List);
+List.belongsTo(User);
+
+User.hasMany(Like);
+Like.belongsTo(User);
+
+Review.hasMany(Like);
+Like.belongsTo(Review);
+
+List.belongsToMany(Anime, { through: 'list_anime' });
+Anime.belongsToMany(List, { through: 'list_anime' });
+
+
 //  Anime.hasMany(Episodes)//relacion de uno a muchos anime y episodes
 //  Episodes.belongsTo(Anime);
  

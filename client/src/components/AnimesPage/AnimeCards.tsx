@@ -1,6 +1,5 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import Tag from '../Tag';
+import Tag from '../UtilsComponents/Tag';
 import style from "../../style/AnimesPage/Animecard.module.css";
 import { Anime } from "../../types/types";
 
@@ -10,7 +9,7 @@ export default function AnimeCards({posterImage, name, id, showType, status}:Ani
     
       <div className={style["cardAnime"]}>
         <div className={style['cardAnime-image-container']}>
-          <Link to={`/animes/${id}`}>
+          <Link to={`/watch/${id}`}>
             <img src={posterImage} alt={`img ${name}`} className={style['anime-img']} />
           </Link>
         </div>

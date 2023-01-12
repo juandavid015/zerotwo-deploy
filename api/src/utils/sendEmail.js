@@ -16,8 +16,11 @@ const sendEmail = async(email, subject, text) => {
             port: 587,
             secure: true,
             auth: {
-                user: "juandavidgr10002@gmail.com",
-                pass: "ddlpwwmdewbgpqhd"
+                user: "zerotwoproject2023@gmail.com",
+                pass: "ymzrdtjgcmpxzivl"
+            },
+            tls: {
+                rejectUnauthorized: false
             }
     })
     await transporter.sendMail({
@@ -25,10 +28,11 @@ const sendEmail = async(email, subject, text) => {
         to: email,
         subject: subject,
         text: text,
+        html: `<h2>Hi! Click in the link bellow to complete your account verification</h2><br>${text}`
       });
       
     }catch (err) {
-        throw new Error("email not sent");
+        throw new Error(err);
     }
 }
 

@@ -4,26 +4,27 @@ import style from "../../style/Login_and_Register/Register.module.css";
 import { Link } from "react-router-dom";
 import validationSchema from "./validations/validationRegister";
 import { useAppDispatch } from "../../redux/hooks";
-import { getUserResource, registerUser } from "../../redux/actions";
-
+import { registerUser } from "../../redux/actions";
+import sideAnimeImg from '../../img/animeImg1.png'
+import { useHistory } from "react-router-dom";
 interface FormValues {
   nickname: string;
   age: number;
   email: string;
   password: string;
-  changePasword: string;
+  confirmPassword: string;
 }
 export default function Register(): JSX.Element {
   const dispatch = useAppDispatch();
-
+  const history = useHistory();
   const initialValues: FormValues = {
     nickname: "",
     age: 0,
     email: "",
     password: "",
-    changePasword: "",
+    confirmPassword: "",
   };
-
+  const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState(initialValues);
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
 
@@ -34,30 +35,49 @@ export default function Register(): JSX.Element {
   }
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(registerUser(user));
-    alert('Check your email for account verification!')
-    setUser({
-      nickname: "",
-      age: 0,
-      email: "",
-      password: "",
-      changePasword: "",
-    }
-  )
+    setIsLoading(true);
+    dispatch(registerUser(user)).then(val => {
+      setIsLoading(false)
+      alert('Check your email for account verification!')
+      setUser({
+        nickname: "",
+        age: 0,
+        email: "",
+        password: "",
+        confirmPassword: "",
+      })
+      history.push('/login');
+      
+    }).catch(err => {
+      setIsLoading(false);
+      alert('An error has ocurred')
+      setUser({
+        nickname: "",
+        age: 0,
+        email: "",
+        password: "",
+        confirmPassword: "",
+      })
+    });
+
+    // No se esta seteando correctamente los inputs a su valor inicial
+    // CHEQUEAR QUE FUNCIONE
   };
   return (
-    <div>
-      <h2>Create Account</h2>
+    <div className={style['form-signup-container']}>
+     
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
       >
-        <Form className={style["form"]} onChange={handleChange} onSubmit={handleSubmit}>
+        <Form className={style["form-signup"]} onChange={handleChange} onSubmit={handleSubmit}>
+          <h1>Sign up</h1>
           <label htmlFor="nickname" className={style["form__label"]}>
             Nickname
           </label>
-          <Field name="nickname" type="text" className={style["form__input"]} />
+          <Field name="nickname" type="text" className={style["form__input"]}
+          value={user.nickname} />
 
           <ErrorMessage
             name="nickname"
@@ -68,7 +88,8 @@ export default function Register(): JSX.Element {
           <label htmlFor="age" className={style["form__label"]}>
             Age
           </label>
-          <Field name="age" type="number" className={style["form__input"]} />
+          <Field name="age" type="number" className={style["form__input"]}
+          value={user.age} />
 
           <ErrorMessage
             name="age"
@@ -79,7 +100,8 @@ export default function Register(): JSX.Element {
           <label htmlFor="email" className={style["form__label"]}>
             Email
           </label>
-          <Field name="email" type="text" className={style["form__input"]} />
+          <Field name="email" type="text" className={style["form__input"]}
+          value={user.email} />
 
           <ErrorMessage
             name="email"
@@ -94,6 +116,7 @@ export default function Register(): JSX.Element {
             name="password"
             type="password"
             className={style["form__input"]}
+            value={user.password}
           />
 
           <ErrorMessage
@@ -102,31 +125,37 @@ export default function Register(): JSX.Element {
             className={style["form__error"]}
           />
 
-          <label htmlFor="changepassword" className={style["form__label"]}>
+          <label htmlFor="confirmPassword" className={style["form__label"]}>
             Confirm Password
           </label>
           <Field
-            name="changepassword"
+            name="confirmPassword"
             type="password"
             className={style["form__input"]}
+            value={user.confirmPassword}
           />
 
           <ErrorMessage
-            name="changepassword"
+            name="confirmPassword"
             component="span"
             className={style["form__error"]}
           />
-          <button type="submit" className={style["btn"]}>
-            Create Account
+          <button type="submit" className={style["signup-btn"]} disabled={isLoading ? true: false}>
+            Sign up
           </button>
-          <p>
+          <p style={{marginBottom: '2em'}}> 
             Already have an account?{" "}
             <Link to={"login"} className={style["link"]}>
               <span>Log In</span>
             </Link>
           </p>
+          
         </Form>
+      
       </Formik>
+      <div className={style['aside-background']}>
+          <img src={sideAnimeImg} alt="anime img" className={style['anime-img']}/>
+      </div>
     </div>
   );
 }

@@ -1,26 +1,11 @@
-import React from "react";
-import { useSelector } from "react-redux";
-
 import style from "../../style/Home/SectionHomeDos.module.css";
-
 import CardBasic from "./CardBasic";
-
 import { motion } from "framer-motion";
 import { useAppSelector } from "../../redux/hooks";
 
-interface AppState {
-  childAnime: Array<ChildAnime>
-}
-
-interface ChildAnime {
-  name: string
-  posterImage: string
-  showType: string
-  status: string
-}
 // If i want to set props to this element type this: 
 // const SectionHomeDos = ({name_of_the_prop}: Props) => {
-const SectionHomeDos = () => {
+const SectionHomeDos = ():JSX.Element => {
   const animes= useAppSelector((state) => state['animes']);
 
   return (
@@ -31,11 +16,11 @@ const SectionHomeDos = () => {
       <motion.section className={style['section_dos']}>
         <motion.div
           drag="x"
-          dragConstraints={{ right: 0, left: -650 }}
+          dragConstraints={{ right: 0, left: -1650 }}
           className={style['cardsContainer']}
         >
           {animes &&
-            animes.map((anime, i) => {
+            animes.rows.map((anime, i) => {
               return (
                 <CardBasic
                   name={anime.name}

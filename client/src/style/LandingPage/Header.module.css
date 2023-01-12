@@ -5,14 +5,18 @@
   background-position: center center;
   height: 100vh;
 }
-
+.presentacion a {
+  color: var(--main-color-font-dark);
+}
 .presentacion {
-  padding-top: 70px;
   margin: auto;
-  columns: white;
+  columns: var(--main-bg-color-light);
   display: flex;
   flex-direction: column;
-  color: white;
+  color: var(--main-bg-color-light);
+  justify-content: center;
+  align-items: center;
+  gap: 2em;
 }
 
 .presentacion h1 {
@@ -20,35 +24,39 @@
 }
 
 .premium {
-  background-color: #ffc989;
+  width: fit-content;
+  background-color: var(--secondary-color-items-1);
   border: none;
-  margin-top: 30px;
-  color: #1a0750;
+  color: var(--main-color-font-dark);
   box-sizing: border-box;
-  box-shadow: 5px 5px 0px #ffc989;
+  box-shadow: 5px 5px 0px var(--secondary-color-items-1);
   font-size: 20px;
   padding: 10px 20px;
 }
 
 .explore {
-  margin-top: 50px;
-  background-color: #e1953a;
+  width: fit-content;
+  background-color: var(--secondary-color-items-4);
   border: none;
   color: #1a0750;
   box-sizing: border-box;
-  box-shadow: 5px 5px 0px #e1953a;
+  box-shadow: 5px 5px 0px var(--secondary-color-items-4);
   font-size: 20px;
   padding: 10px 20px;
 }
 
 .presentacion h2 {
-  margin-top: 30px;
-  color: white;
+  color: var(--main-bg-color-light);
   font-size: 30px;
 }
 
 .angle {
-  margin-top: 50px;
-  color: #ffc989;
+  color: var(--secondary-color-items-1);
   font-size: 60px;
 }
+
+.link-down {
+  width: fit-content;
+  height: fit-content;
+}
+
