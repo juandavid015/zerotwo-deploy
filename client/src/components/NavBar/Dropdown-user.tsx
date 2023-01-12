@@ -11,7 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-
+const CLIENT_ORIGIN_URL = process.env.REACT_APP_CLIENT_ORIGIN_URL || "http://localhost:3001";
 const DropdownUser = () => {
   const history = useHistory();
   const [menu, setMenu] = useState(false);
@@ -38,7 +38,7 @@ const DropdownUser = () => {
     setMenu(!menu);
     if (isAuthenticated) {
       window.localStorage.removeItem('token');
-      logout({ returnTo: 'http://localhost:3000/login'})
+      logout({ returnTo: `${CLIENT_ORIGIN_URL}/login`})
     } else {
       window.localStorage.removeItem('token');
       history.push('/login')
