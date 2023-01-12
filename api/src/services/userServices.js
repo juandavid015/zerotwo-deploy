@@ -7,7 +7,7 @@ const comparePassword = require('../utils/comparePassword.js');
 const { Op } = require('sequelize');
 const dotenv = require('dotenv').config();
 const CLIENT_ORIGIN_URL = process.env.CLIENT_ORIGIN_URL;
-
+const SERVER_URL = process.env.SERVER_URL;
 exports.getUserInfoWithGoogle = async (email) => {
   try {
     const user = await User.findOne({ where: { email: email, email_verified: true, registered: true } });
@@ -151,7 +151,7 @@ exports.createUser = async (user) => {
       let token = generateToken({ email: user.email });
       console.log(token);
       console.log(user);
-      const message = `${CLIENT_ORIGIN_URL || 'http://localhost:3001'}/user/verify/${email}/${token}`;
+      const message = `${SERVER_URL || 'http://localhost:3001'}/user/verify/${email}/${token}`;
       await sendEmail(email, "Zero Two: Verify your account", message);
       return userCreated;
     }
