@@ -99,8 +99,7 @@ exports.postListDb = async (listInfo) => {
       if(listUserCheck) {
         throw new Error('Ya existe una lista con para ese usuario')
       } else {
-        await List.create(listInfo);
-        const newList = await List.findOne({ where: {name: listName} });
+        const newList = await List.create(listInfo);
         await newList.setUser(user);
         return 'List created succesfully!';
       }
