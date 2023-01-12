@@ -59,8 +59,8 @@ export default function AnimeDetail () {
           await dispatch(addListAnime(animeToAdd));
           history.push(`/profile/list/${listId}`);
         } catch (error: any) {
-            alert(error.message);
-            // history.push(`/profile/list/${listId}`);
+            history.push(`/profile/list/${listId}`);
+            
         }
     }
 

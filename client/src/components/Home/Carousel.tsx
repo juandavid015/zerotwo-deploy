@@ -8,6 +8,7 @@ import {
 import { Link } from "react-router-dom";
 import defaultImg from "../../img/defaultImg.jpg";
 import { useAppSelector } from "../../redux/hooks";
+import Loading from "../UtilsComponents/Loading";
 
 export default function Carousel() {
   const nextImage = () => {
@@ -29,7 +30,7 @@ export default function Carousel() {
   if (!Array.isArray(animes.rows) || amount === 0)
     return (
       <div>
-        <p>Sin info</p>
+        <Loading />
       </div>
     );
 
@@ -47,7 +48,7 @@ export default function Carousel() {
 
           <div className={style["img_carusel_cont"]}>
             {
-              animes?.rows.map((elem, index) => {
+              animes?.rows?.map((elem, index) => {
                 return (
                   <div key={index}>
                     {currentImage === index && <h2 key={index}>{elem.name}</h2>}
@@ -56,7 +57,7 @@ export default function Carousel() {
               })}
 
             {
-              animes?.rows.map((elem, index) => {
+              animes?.rows?.map((elem, index) => {
                 return (
                   <div
                     key={index}
