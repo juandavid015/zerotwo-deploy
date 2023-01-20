@@ -16,9 +16,11 @@ exports.getUser= async (req, res) => {
 }
 
 exports.getUserWithGoogle = async (req, res) => {
-    let userEmail = req.user['https://example.com/email']
+
+    let userInfo = req.body;
+    console.log('UI', userInfo)
     try {
-        const user = await userServices.getUserInfoWithGoogle(userEmail);
+        const user = await userServices.getUserInfoWithGoogle(userInfo);
         res.status(200).send(user);
         
     } catch (err) {

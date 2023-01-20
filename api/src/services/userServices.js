@@ -8,18 +8,34 @@ const { Op } = require('sequelize');
 const dotenv = require('dotenv').config();
 const CLIENT_ORIGIN_URL = process.env.CLIENT_ORIGIN_URL;
 const SERVER_URL = process.env.SERVER_URL;
-exports.getUserInfoWithGoogle = async (email) => {
+
+exports.getUserInfoWithGoogle = async (user) => {
+  console.log('HE', user)
+  let email = user.email
+  console.log('email', email)
   try {
-    const user = await User.findOne({ where: { email: email, email_verified: true, registered: true } });
-    if (!user) {
-      throw new Error("User has not been registered yet. Please Sign up");
+    const userFounded = await User.findOne({ where: { email: email, email_verified: true, registered: true } });
+    if (!userFounded) {
+      // throw new Error("User has not been registered yet. Please Sign up");
+      let userGoogle = {};
+      userGoogle.email_verified = true;
+      userGoogle.registered = true;
+      userGoogle.email = user.email;
+      userGoogle.nickname = user.nickname;
+      userGoogle.image = user.picture;
+
+      let userCreated = await User.create(userGoogle);
+      console.log('USER CREATED:', userCreated)
+      return userCreated
     } else {
-      if (user.permissions === "Banned")
-        throw new Error("User has been banned");
-      if (user.email_verified && user.registered) return user;
-      throw new Error(
-        "Unregistered account. Complete the account veryfication"
-      );
+      if (userFounded.permissions === "Banned") throw new Error("User has been banned");
+        
+      if (userFounded.email_verified && userFounded.registered) return userFounded;
+      else {
+        throw new Error(
+          "Unregistered account. Complete the account veryfication"
+        );
+      }
     }
   } catch (error) {
     throw new Error(error.message);
@@ -159,7 +175,6 @@ exports.createUser = async (user) => {
     throw new Error(err);
   }
 };
-
 exports.deleteUser = async (email) => {
   let user = await User.findOne({ where: { email: email } });
 
@@ -176,11 +191,12 @@ exports.deleteUser = async (email) => {
 
 };
 
-exports.defineCategoryGenin = async (id, token) => {
+
+exports.defineCategory = async (id, token, plan) => {
   try {
     let userX = await User.findOne({ where: { id } });
     userX.token = token;
-    userX.plan = "1";
+    userX.plan = plan;
 
     await userX.save();
     return userX;
@@ -189,31 +205,45 @@ exports.defineCategoryGenin = async (id, token) => {
   }
 };
 
-exports.defineCategoryChuunin = async (id, token) => {
-  try {
-    let userX = await User.findOne({ where: { id } });
-    userX.token = token;
-    userX.plan = "2";
 
-    await userX.save();
-    return userX;
-  } catch (error) {
-    console.log(error);
-  }
-};
+// exports.defineCategoryGenin = async (id, token) => {
+//   try {
+//     let userX = await User.findOne({ where: { id } });
+//     userX.token = token;
+//     userX.plan = "1";
 
-exports.defineCategoryJounin = async (id, token) => {
-  try {
-    let userX = await User.findOne({ where: { id } });
-    userX.token = token;
-    userX.plan = "3";
+//     await userX.save();
+//     return userX;
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// };
+
+// exports.defineCategoryChuunin = async (id, token) => {
+//   try {
+//     let userX = await User.findOne({ where: { id } });
+//     userX.token = token;
+//     userX.plan = "2";
+
+//     await userX.save();
+//     return userX;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
+// exports.defineCategoryJounin = async (id, token) => {
+//   try {
+//     let userX = await User.findOne({ where: { id } });
+//     userX.token = token;
+//     userX.plan = "3";
     
-    await userX.save();
-    return userX;
-  } catch (error) {
-    console.log(error);
-  }
-};
+//     await userX.save();
+//     return userX;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
 
 exports.searchuser = async (name) => {
@@ -246,8 +276,8 @@ exports.modifyUser = async (userId, settings) => {
       throw new Error('User could not be founded');
     } else {
 
-      let password = settings.password;
-      let confirmPassword = settings.confirmPassword;
+      let password = settings?.password;
+      let confirmPassword = settings?.confirmPassword;
 
       if(password.length && confirmPassword.length) {
         if (password === confirmPassword) {
@@ -278,7 +308,7 @@ exports.modifyUser = async (userId, settings) => {
         delete settings.confirmPassword;
 
         Object.entries(settings).forEach(([key, value]) => {
-          if(value.length) user[key] = value;
+          if(value?.length) user[key] = value;
           else return
         })
 
@@ -290,7 +320,7 @@ exports.modifyUser = async (userId, settings) => {
       
     }
   } catch(err) {
-    console.log(err.message)
+    console.log(err)
     throw new Error(err.message);
   }
 }

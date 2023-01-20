@@ -1,4 +1,4 @@
-const { defineCategoryJounin } = require("../../services/userServices");
+const { defineCategory} = require("../../services/userServices");
 const axios = require("axios");
 
 const CLIENT_ID =
@@ -8,9 +8,9 @@ const SECRET =
 const PAYPAL_API = "https://api-m.sandbox.paypal.com"; // Live https://api-m.paypal.com
 
 const auth = { user: CLIENT_ID, pass: SECRET };
-
-const createPaymentJounin = async (req, res) => {
-  const { id } = req.body;
+const CLIENT_ORIGIN_URL = process.env.CLIENT_ORIGIN_URL || 'http://localhost:3000'
+const createPayment = async (req, res) => {
+  const { id, plan } = req.body;
 
   const body = {
     intent: "CAPTURE",
@@ -18,7 +18,7 @@ const createPaymentJounin = async (req, res) => {
       {
         amount: {
           currency_code: "USD", //https://developer.paypal.com/docs/api/reference/currency-codes/
-          value: "36.00",
+          value: `${plan === '1' ? '1.50' : plan === '2' ? '3.00' : '36.00'}`,
         },
       },
     ],
@@ -26,8 +26,8 @@ const createPaymentJounin = async (req, res) => {
       brand_name: `ZeroTwo.com`,
       landing_page: "NO_PREFERENCE", // Default, para mas informacion https://developer.paypal.com/docs/api/orders/v2/#definition-order_application_context
       user_action: "PAY_NOW", // Accion para que en paypal muestre el monto del pago
-      return_url: `http://localhost:3000/profile/plan`, // Url despues de realizar el pago
-      cancel_url: `http://localhost:3000/home`, // Url despues de realizar el pago
+      return_url: `${CLIENT_ORIGIN_URL}/profile/plan?plan=${plan}`, // Url despues de realizar el pago
+      cancel_url: `${CLIENT_ORIGIN_URL}/profile/plan`, // Url despues de realizar el pago
     },
   };
 
@@ -43,18 +43,7 @@ const createPaymentJounin = async (req, res) => {
 
   //res.send("Creating order");
 };
-
-const jouninToken = async (req, res) => {
-  try {
-    const { id, token } = req.body;
-    defineCategoryJounin(id, token);
-  } catch (e) {
-    throw new Error(e.message);
-  }
-  res.send("token sended");
-};
-
-const executePaymentJounin = async (req, res, next) => {
+const executePayment = async (req, res, next) => {
   const { token } = req.query;
 
   // http://localhost:3001/execute-paymentGenin?token=2JG20658CT6958613
@@ -72,13 +61,27 @@ const executePaymentJounin = async (req, res, next) => {
     );
     next();
   } catch (error) {
-    // console.log(error)
+    console.log(error)
     res.status(404).send("Invalid payment");
   }
 };
 
+const purchase = async (req, res) => {
+  try {
+    const { id, token, plan  } = req.body;
+
+    const userPay = await defineCategory(id, token, plan);
+    res.status(200).send(userPay);
+  } catch (e) {
+    throw new Error(e.message);
+    // console.log(e.message);
+  }
+  
+};
+
+
 module.exports = {
-  createPaymentJounin,
-  executePaymentJounin,
-  jouninToken,
+  createPayment,
+  executePayment,
+  purchase,
 };

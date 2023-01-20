@@ -2,9 +2,9 @@ const { defineCategoryChuunin } = require("../../services/userServices");
 const axios = require("axios");
 
 const CLIENT_ID =
-  "AUqGcl4VaguN5OrNNkWIeKtQmRTouEl_sV-HlxUZ0eZyDf5J3N8X2XW7r4v5PLySdX9U6Q-3SLZRvRXu";
+  "ATmoUxMVoAJD16IwOuocZjDV3npTr5aOzpZSKC2zstxKV8HG7OGnK_ZRhcQsvmueaZ6CB1p9HZEg258G";
 const SECRET =
-  "EC0cX-9AWCvFbBqLhE2wX_DY8-sMPFrtTjEhvclO3RBWBnGrE89PajplcktQsrZmWkQnV4EQ7l-jZOak";
+  "EAE5bs8qC4Nc8CoKmA4yyVwGaty30m7SVtcOTS2s6yqW0B__5sZiMKSafyScmMbd82Sj-twy9nhcZU9q";
 const PAYPAL_API = "https://api-m.sandbox.paypal.com"; // Live https://api-m.paypal.com
 
 const auth = { user: CLIENT_ID, pass: SECRET };

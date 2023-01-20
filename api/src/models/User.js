@@ -24,11 +24,11 @@ module.exports = (sequelize) => {
       },
       age: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       password: {
         type: DataTypes.TEXT,
-        allowNull: false,
+        allowNull: true,
       },
       email: {
         type: DataTypes.TEXT,
