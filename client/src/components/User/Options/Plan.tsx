@@ -1,5 +1,5 @@
 import { useAuth0, User } from "@auth0/auth0-react";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
@@ -13,6 +13,9 @@ import {
   updateUser,
 } from "../../../redux/actions";
 import {  useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import PlanCard from "./PlanCard";
+import PostPaymentAlert from "./PostPaymentAlert";
+import PrePaymentAlert from "./PrePaymentAlert";
 
 export default function Plan() {
   let { search } = useLocation();
@@ -22,7 +25,8 @@ export default function Plan() {
 
   let userDB = useAppSelector((state) => state["user"]);
   const { isLoading, getAccessTokenSilently, user } = useAuth0<User>();
-
+  const [preAlert, setPreAlert] = useState(false);
+  const [postAlert, setPostAlert] = useState(false);
 
   const tokenPlan = searchParams.get("token")!;
   const typePlan = searchParams.get('plan');
@@ -33,6 +37,7 @@ export default function Plan() {
     await dispatch(executePayment(userId, tokenPlan, plan))
     .then((val)=> {
       console.log('UPDATE USER:' , val)
+      setPostAlert(true);
       dispatch(updateUser(val))
     })
     history.push("/profile/plan");
@@ -63,15 +68,15 @@ export default function Plan() {
   }, [tokenPlan, userDB.id, typePlan, userDB.plan?.length]);
   //plan?token=asdsadsad
   if(tokenPlan?.length) return (
-    <div>
-      We're almost ready. Processing Payment
-    </div>
+    <PrePaymentAlert cancelCb={()=> setPreAlert(false)}/>
   ) 
   else  {
     return (
-    <div>
-      <h1>{userDB.plan}</h1>
-    </div>
+      <>
+      {postAlert &&
+      <PostPaymentAlert cancelCb={()=> setPostAlert(false)}/>}
+      <PlanCard {...userDB}/>
+      </>
     );
     {/* <h2>{userDB.token}</h2> */}
   

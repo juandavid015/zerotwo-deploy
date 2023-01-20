@@ -1,0 +1,41 @@
+.post-payment-container {
+    margin: 2em;
+    text-align: left;
+    padding: 2em;
+    background-color: var(--main-color-content);
+    background-color: var(--main-color-font-dark);
+    
+    position: relative;
+}
+
+.post-payment-container .payment-status-msg{
+    color: var(--main-color-font-dark);
+    color: var(--main-color-content);
+    font-weight: bold;
+}
+
+.post-payment-container .payment-msg{
+    color: var(--main-color-font-dark2);
+    color: var(--main-color-content);
+    opacity: .5;
+}
+
+.cancel-btn {
+    padding: .5em;
+    background-color: var(--main-color-font-dark2);
+    background-color: var(--main-color-content);
+    color: var(--main-color-font-dark);
+    color: var(--main-color-font-dark);
+    border: none;
+    box-sizing: border-box;
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    cursor: pointer;
+}
+.cancel-btn:hover {
+    background-color: var(--main-color-font-dark);
+    background-color: var(--secondary-color-content-1);
+    color: var(--main-color-font-dark);
+
+}
