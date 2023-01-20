@@ -18,7 +18,7 @@ export default function Profile(): JSX.Element | null {
 
   const getToken = useCallback( async () => {
     const accesToken = await getAccessTokenSilently();
-    dispatch(getUserResourceWithGoogle(accesToken, emailUser)).then(val => {
+    dispatch(getUserResourceWithGoogle(accesToken, user)).then(val => {
      
       setUserLog(val)
     });

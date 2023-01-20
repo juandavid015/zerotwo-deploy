@@ -4,7 +4,10 @@ import { FILTER_AND_SORT_ANIMES, GET_ANIME_BY_ID, GET_ANIME_EPISODES, GET_ANIME_
   EXECUTE_PAYMENT_GENIN,
   EXECUTE_PAYMENT_CHUUNIN,
   EXECUTE_PAYMENT_JOUNIN,
-  GET_LIST_FAVORITES,  } from "../types";
+  GET_LIST_FAVORITES,
+  CREATE_PAYMENT,
+  EXECUTE_PAYMENT,
+  UPDATE_USER_INFO,  } from "../types";
 import {AnyAction} from 'redux'
 import { Anime, CommentInterface, Episode, ErrorResponse, Genre, ListDetail, UserInterface, UserLists } from "../../types/types";
 
@@ -46,9 +49,11 @@ const initialState = {
   genres: [],
   error: {} as ErrorResponse,
   episodeComments: [],
+  payPaypal: {},
   payPaypalGenin: {},
   payPaypalChuunin: {},
   payPaypalJounin: {},
+  executePayment: {},
   executePaymentGenin: {},
   executePaymentChuunin: {},
   executePaymentJounin: {},
@@ -127,36 +132,23 @@ function rootReducer(state: StateAnimes = initialState, action: AnyAction) {
         ...state,
         episodeComments: action.payload,
       };
-    case CREATE_PAYMENT_GENIN:
+
+    case CREATE_PAYMENT:
       return {
         ...state,
-        payPaypalGenin: action.payload,
+        payPaypal: action.payload,
       };
-    case CREATE_PAYMENT_CHUUNIN:
+ 
+    case EXECUTE_PAYMENT:
       return {
         ...state,
-        payPaypalChuunin: action.payload,
+        executePayment: action.payload,
       };
-    case CREATE_PAYMENT_JOUNIN:
+    case UPDATE_USER_INFO: 
       return {
-        ...state,
-        payPaypalJounin: action.payload,
-      };
-    case EXECUTE_PAYMENT_GENIN:
-      return {
-        ...state,
-        executePaymentGenin: action.payload,
-      };
-    case EXECUTE_PAYMENT_CHUUNIN:
-      return {
-        ...state,
-        executePaymentChuunin: action.payload,
-      };
-    case EXECUTE_PAYMENT_JOUNIN:
-      return {
-        ...state,
-        executePaymentJounin: action.payload,
-      };  
+        ...state, 
+        user: action.payload
+      }
     case GET_ALL_LISTS_USER:
       return {
         ...state,

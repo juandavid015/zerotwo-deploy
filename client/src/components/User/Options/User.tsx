@@ -4,14 +4,16 @@ import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import style from '../../../style/User/Options/UserSettings.module.css';
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import validationSchema from "../../Login_and_Register/validations/validationRegister";
+import { useAuth0 } from '@auth0/auth0-react';
 
 export default function User() {
   const dispatch = useAppDispatch();
-  const user = useAppSelector(state => state.user);
+  const userAccount = useAppSelector(state => state.user);
+  const { user } = useAuth0();
   const [UserSettings, setUserSettings] = useState({
-    nickname: user.nickname,
-    image: user.image || '',
-    age: user.age,
+    nickname: userAccount.nickname,
+    image: userAccount.image || '',
+    age: userAccount.age,
     password: '',
     confirmPassword: ''
   })
@@ -27,7 +29,7 @@ export default function User() {
   }
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    dispatch(changeUserSettings(user.id, UserSettings)).then(()=> alert('Settings saved successfully'))
+    dispatch(changeUserSettings(userAccount.id, UserSettings)).then(()=> alert('Settings saved successfully'))
  
   }
   return (
@@ -71,7 +73,9 @@ export default function User() {
             className={style["form__error"]}
         />
 
-        <div className={style['form-user-option']}>
+       {!user &&
+        <>
+         <div className={style['form-user-option']}>
           <label>Change password</label>
           <Field type={'password'} placeholder={'Password...'}
           value={UserSettings.password} name='password'
@@ -89,6 +93,8 @@ export default function User() {
           value={UserSettings.confirmPassword} name='confirmPassword'
           />
         </div>
+        </>
+       }
         <ErrorMessage
             name="confirmPassword"
             type="password"

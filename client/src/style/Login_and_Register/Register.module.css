@@ -57,6 +57,23 @@
 .form-signup .link {
   color: var(--main-color-font-dark2);
 }
+.login-google-btn {
+  gap: .5em;
+  background-color: var(--main-bg-color-light);
+  color: var(--main-color-font-dark2);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  border: none;
+  padding: .5em;
+}
+.login-google-btn:hover {
+  transform: scale(1.05);
+  opacity: 1;
+}
+.login-google-btn svg {
+  height: 30px;
+}
 .aside-background{
   width: 35%;
   background-color: var(--main-color-font-dark);

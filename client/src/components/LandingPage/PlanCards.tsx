@@ -1,21 +1,30 @@
 import style from "../../style/LandingPage/PlanCards.module.css";
-// import { useAppDispatch } from "../../redux/hooks";
-// import {
-//   createPaymentGenin,
-//   createPaymentChuunin,
-//   createPaymentJounin,
-// } from "../../redux/actions/index";
-// import { useRef } from "react";
-// import { useHistory } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import {
+  createPaymentGenin,
+  createPaymentChuunin,
+  createPaymentJounin,
+  createPayment,
+} from "../../redux/actions/index";
+import { useEffect, useRef } from "react";
+import { useHistory } from "react-router-dom";
 
 export default function PlanCards(): JSX.Element {
-  // const scrollCard = useRef();
-  // let userDB = useAppSelector((state) => state["user"]);
-  // let dispatch = useAppDispatch();
-  // let history = useHistory();
+  const scrollCard = useRef();
+  let userDB = useAppSelector((state) => state["user"]);
+  let dispatch = useAppDispatch();
+  let history = useHistory();
 
-  // useEffect(() => {}, [dispatch, user]);
 
+  const handleSubmit = async (plan: string) => {
+    try {
+      await dispatch(createPayment(plan)).then((val: any) => {
+        window.location.href = `${val.data.data}`;
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   // const handleSubmitGenin = async () => {
   //   try {
   //     await dispatch(createPaymentGenin()).then((val: any) => {
@@ -47,7 +56,7 @@ export default function PlanCards(): JSX.Element {
   //     console.log(error);
   //   }
   // };
-
+  // useEffect(() => {}, [dispatch, user]);
   return (
     <div id="planCards" className={style["title"]}>
       <h1>Our premium offerts:</h1>
@@ -55,9 +64,9 @@ export default function PlanCards(): JSX.Element {
         <div className={style["cardPlan"]}>
           <h2>GENIN-PLAN</h2>
 
-          {/* <button className={style["btn"]} onClick={handleSubmitGenin}>
+          <button className={style["btn"]} onClick={()=> handleSubmit('1')}>
             VIP
-          </button> */}
+          </button>
 
           <h3>1.50 USD</h3>
           <ul>
@@ -69,10 +78,10 @@ export default function PlanCards(): JSX.Element {
         </div>
         <div className={style["cardPlan"]}>
           <h2>CHUUNIN-PLAN(1-Month)</h2>
-{/* 
-          <button className={style["btn"]} onClick={handleSubmitChuunin}>
+
+          <button className={style["btn"]} onClick={()=> handleSubmit('2')}>
             VIP
-          </button> */}
+          </button>
 
           <h3>3.00 USD</h3>
           <ul>
@@ -86,9 +95,9 @@ export default function PlanCards(): JSX.Element {
         <div className={style["cardPlan"]}>
           <h2>JOUNIN-PLAN(1-Year)</h2>
 
-          {/* <button className={style["btn"]} onClick={handleSubmitJounin}>
+          <button className={style["btn"]} onClick={()=> handleSubmit('3')}>
             VIP
-          </button> */}
+          </button>
 
           <h3>36.00 USD</h3>
           <ul>

@@ -1,57 +1,79 @@
-// import { useEffect } from "react";
-// import { useHistory } from "react-router-dom";
-// import { useLocation } from "react-router-dom";
+import { useAuth0, User } from "@auth0/auth0-react";
+import { useCallback, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
-// import {
-//   executePaymentGenin,
-//   executePaymentChuunin,
-//   executePaymentJounin,
-// } from "../../../redux/actions";
-import {  useAppSelector } from "../../../redux/hooks";
+import {
+  executePaymentGenin,
+  executePaymentChuunin,
+  executePaymentJounin,
+  executePayment,
+  getUserResourceWithGoogle,
+  getUserResource,
+  updateUser,
+} from "../../../redux/actions";
+import {  useAppDispatch, useAppSelector } from "../../../redux/hooks";
 
 export default function Plan() {
-  // let { search } = useLocation();
-  // let searchParams = new URLSearchParams(search);
+  let { search } = useLocation();
+  let searchParams = new URLSearchParams(search);
 
-  // const history = useHistory();
+  const history = useHistory();
 
   let userDB = useAppSelector((state) => state["user"]);
+  const { isLoading, getAccessTokenSilently, user } = useAuth0<User>();
+
+
+  const tokenPlan = searchParams.get("token")!;
+  const typePlan = searchParams.get('plan');
+  const dispatch = useAppDispatch();
+
+
+  const verifyPayment = async (tokenPlan: string, userId: string, plan: string) => {
+    await dispatch(executePayment(userId, tokenPlan, plan))
+    .then((val)=> {
+      console.log('UPDATE USER:' , val)
+      dispatch(updateUser(val))
+    })
+    history.push("/profile/plan");
+  };
+  
+  const getRegularToken = useCallback(async () => {
+    return window.localStorage.getItem('token')  
+  }, [])
+
+  
 
 
 
-  // const tokenPlan = searchParams.get("token")!;
 
-  // const dispatch = useAppDispatch();
+  useEffect(() => {
+    if(userDB.id && tokenPlan && typePlan) {
+      verifyPayment(tokenPlan ,userDB.id, typePlan );
+      // .then(()=> {
+      //   if(user) {
+      //     let token = getAccessTokenSilently();
+      //     dispatch(getUserResourceWithGoogle(token, user))
+      //   }
+      // });
 
-  // const verifiedPaymentGenin = async (tokenPlan: string) => {
-  //   await dispatch(
-  //     executePaymentGenin("43852eac-e259-4dbb-aff1-5020b4bd9ab5", tokenPlan)
-  //   );
-  //   history.push("/home");
-  // };
-
-  // const verifiedPaymentChuunin = async (tokenPlan: string) => {
-  //   await dispatch(
-  //     executePaymentChuunin("43852eac-e259-4dbb-aff1-5020b4bd9ab5", tokenPlan)
-  //   );
-  //   history.push("/home");
-  // };
-
-  // const verifiedPaymentJounin = async (tokenPlan: string) => {
-  //   await dispatch(
-  //     executePaymentJounin("43852eac-e259-4dbb-aff1-5020b4bd9ab5", tokenPlan)
-  //   );
-  //   history.push("/home");
-  // };
-
-  // useEffect(() => {
-  //   verifiedPaymentGenin(tokenPlan);
-  //   verifiedPaymentChuunin(tokenPlan);
-  //   verifiedPaymentJounin(tokenPlan)
-  // }, [tokenPlan]);
-
-  return <div>
-    <h1>{userDB.plan}</h1>
-    <h2>{userDB.token}</h2>
-  </div>;
+    }
+ 
+  
+  }, [tokenPlan, userDB.id, typePlan, userDB.plan?.length]);
+  //plan?token=asdsadsad
+  if(tokenPlan?.length) return (
+    <div>
+      We're almost ready. Processing Payment
+    </div>
+  ) 
+  else  {
+    return (
+    <div>
+      <h1>{userDB.plan}</h1>
+    </div>
+    );
+    {/* <h2>{userDB.token}</h2> */}
+  
+  }
 }

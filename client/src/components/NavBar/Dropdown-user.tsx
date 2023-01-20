@@ -11,7 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-const CLIENT_ORIGIN_URL = process.env.REACT_APP_CLIENT_ORIGIN_URL || "http://localhost:3001";
+const CLIENT_ORIGIN_URL = process.env.REACT_APP_CLIENT_ORIGIN_URL || "http://localhost:3000";
 const DropdownUser = () => {
   const history = useHistory();
   const [menu, setMenu] = useState(false);

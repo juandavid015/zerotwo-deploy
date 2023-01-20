@@ -3,6 +3,7 @@ import axios from "axios";
 import { AppDispatch } from "../store";
 import { User } from "@auth0/auth0-react";
 import { CommentInterface } from "../../types/types";
+import { string } from "yup";
 
 const API_ENDPOINT =
   process.env.REACT_APP_API_ENDPOINT || "http://localhost:3001";
@@ -250,8 +251,19 @@ export const getUserResource = (accessToken: string) => {
     }
   };
 };
-
-export const getUserResourceWithGoogle = (token: string, email: string) => {
+export const updateUser = (user: any) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      dispatch({ type: types.UPDATE_USER_INFO, payload: user});
+    } catch (err) {
+       dispatch({
+        type: types.UPDATE_USER_INFO,
+        payload: { error: { message: `Not info provided` } },
+      });
+    }
+  };
+} 
+export const getUserResourceWithGoogle = (token: string, user: User | undefined) => {
   return async (dispatch: AppDispatch) => {
     try {
       const config = {
@@ -261,6 +273,7 @@ export const getUserResourceWithGoogle = (token: string, email: string) => {
           "content-type": "application/json",
           Authorization: `Bearer ${token}`,
         },
+        data: user
       };
 
       const response = await axios(config);
@@ -289,6 +302,17 @@ export const getEpisodeComments = (episodeId: number) => {
   };
 };
 
+export const createPayment = (plan: string) => {
+  return async function (dispatch: AppDispatch) {
+    try {
+      const response = await axios.post(`${API_ENDPOINT}/create-payment`,{plan: plan});
+      dispatch({ type: types.CREATE_PAYMENT, payload: response.data });
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
 export const createPaymentGenin = () => {
   return async function (dispatch: AppDispatch) {
     try {
@@ -300,7 +324,27 @@ export const createPaymentGenin = () => {
     }
   };
 };
+export const executePayment= (userId: string, tokenPlan: string, plan: string) => {
+  return async function (dispatch: AppDispatch) {
+    try {
+      const config = {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        url: `${API_ENDPOINT}/execute-payment?token=${tokenPlan}`,
+        data: { id: userId, token: tokenPlan, plan: plan},
+      };
 
+      const response = await axios(config);
+      dispatch({ type: types.EXECUTE_PAYMENT, payload: response.data });
+      return response.data
+ 
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
 export const executePaymentGenin = (userId: string, tokenPlan: string) => {
   return async function (dispatch: AppDispatch) {
     try {

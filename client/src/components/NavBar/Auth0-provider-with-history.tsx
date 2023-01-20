@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 // interface Auth0ProviderWithConfigProps {
 //   children: React.ReactNode;
 // }
-
+const CLIENT_URL = process.env.REACT_APP_CLIENT_ORIGIN_URL|| "http://localhost:3000";
 export const Auth0ProviderWithHistory = (
   prop: PropsWithChildren
 ): JSX.Element => {
@@ -25,7 +25,7 @@ export const Auth0ProviderWithHistory = (
       domain={"dev-ril5g3yq77wjfx3s.us.auth0.com"}
       clientId={"jqsB1I8VXWq6dNhN41XnDGXcBvQ3IpYD"}
       audience={"https://hello-world.example.com"}
-      redirectUri={"https://zerotwo-deploy.vercel.app/home"}
+      redirectUri={`${CLIENT_URL}/home`}
       onRedirectCallback={onRedirectCallback}
     >
       {prop.children}

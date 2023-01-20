@@ -7,6 +7,9 @@ import { useAppDispatch } from "../../redux/hooks";
 import { registerUser } from "../../redux/actions";
 import sideAnimeImg from '../../img/animeImg1.png'
 import { useHistory } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 interface FormValues {
   nickname: string;
   age: number;
@@ -26,6 +29,7 @@ export default function Register(): JSX.Element {
   };
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState(initialValues);
+  const {loginWithRedirect} = useAuth0();
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
 
     const inputName = e.target.name;
@@ -33,6 +37,14 @@ export default function Register(): JSX.Element {
     
     setUser({...user, [inputName]: inputValue })
   }
+  const handleLoginWithGoogle = async () => {
+    await loginWithRedirect({
+      prompt: "login",
+      appState: {
+        returnTo: "/home",
+      },
+    });
+  };
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -59,6 +71,8 @@ export default function Register(): JSX.Element {
         confirmPassword: "",
       })
     });
+
+    
 
     // No se esta seteando correctamente los inputs a su valor inicial
     // CHEQUEAR QUE FUNCIONE
@@ -143,13 +157,22 @@ export default function Register(): JSX.Element {
           <button type="submit" className={style["signup-btn"]} disabled={isLoading ? true: false}>
             Sign up
           </button>
-          <p style={{marginBottom: '2em'}}> 
+          <p> 
             Already have an account?{" "}
             <Link to={"login"} className={style["link"]}>
               <span>Log In</span>
             </Link>
+           
           </p>
+          Or
+          <p  style={{marginBottom: '2em'}}>
           
+            <button type="button" className={style["login-google-btn"]} onClick={handleLoginWithGoogle}>
+            <FontAwesomeIcon icon={faGoogle}/>
+             Sign up with Google
+            </button>
+          </p>
+         
         </Form>
       
       </Formik>

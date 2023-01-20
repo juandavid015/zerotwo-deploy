@@ -15,7 +15,7 @@ import { useAppDispatch } from "./redux/hooks";
 // import Profile from "./components/NavBar/Profile";
 import Admin from "./components/AdminPage/Admin";
 // import { ProtectedRoute } from "./components/NavBar/Protected-route";
-import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth0, User } from "@auth0/auth0-react";
 import NotFound from "./components/UtilsComponents/NotFound";
 
 import Payments from "./components/Payments/Payments";
@@ -26,17 +26,18 @@ import Loading from "./components/UtilsComponents/Footer";
 import UserDashboard from "./components/User/UserDashboard";
 import MyList from "./components/User/Options/MyList";
 import ListDetail from "./components/User/Options/ListDetail";
-import User from "./components/User/Options/User";
+import UserComponent from "./components/User/Options/User";
 
 import Achievements from "./components/User/Options/Achievements";
+import Plan from "./components/User/Options/Plan";
 
 
 const App: React.FC = () =>  {
   const dispatch = useAppDispatch();
 
-  const { isLoading, getAccessTokenSilently, user } = useAuth0();
+  const { isLoading, getAccessTokenSilently, user } = useAuth0<User>();
   // const regularToken = window.localStorage.getItem('token');
-  const emailUser = user?.email ? user?.email : '';
+  // const emailUser = user?.email ? user?.email : '';
 
   const getRegularToken = useCallback(async () => {
     return window.localStorage.getItem('token')  
@@ -44,8 +45,8 @@ const App: React.FC = () =>  {
 
   const getToken = useCallback( async () => {
     const accesToken = await getAccessTokenSilently();
-    await dispatch(getUserResourceWithGoogle(accesToken, emailUser));
-  },[getAccessTokenSilently, emailUser, dispatch])
+    await dispatch(getUserResourceWithGoogle(accesToken, user));
+  },[getAccessTokenSilently,user, dispatch])
     
   const getUserInfo = useCallback(async () => {
     const regTok = await getRegularToken();
@@ -60,7 +61,7 @@ const App: React.FC = () =>  {
     getRegularToken();
   }, [getRegularToken, getUserInfo, getToken, dispatch]);
 
-
+  console.log('USER', user)
 
   if (isLoading) {
     return (
@@ -92,8 +93,8 @@ const App: React.FC = () =>  {
 
           <Route exact path="/profile/list" component={MyList} />
           <Route exact path="/profile/list/:id" component={ListDetail} />
-          <Route exact path="/profile/user" component={User} />
-
+          <Route exact path="/profile/user" component={UserComponent} />
+          <Route exact path="/profile/user" component={Plan} />
           <Route exact path="/profile/achiviements" component={Achievements} />
           <Route exact path="/profile/admin" component={Admin} />
 

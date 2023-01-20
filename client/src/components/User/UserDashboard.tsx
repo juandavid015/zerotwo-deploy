@@ -2,7 +2,7 @@ import UserNav from "./UserNav";
 import HeaderUser from "./HeaderUser";
 // import MyList from "./Options/MyList";
 // import User from "./Options/User";
-// import Plan from "./Options/Plan";
+import Plan from "./Options/Plan";
 // import Achievements from "./Options/Achievements";
 // import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import style from "../../style/User/UserDasboard.module.css";
@@ -59,7 +59,9 @@ export default function UserDashboard(): JSX.Element {
             <MyList />
           ) : options === 'user' ? (
             <User />
-          )  : null
+          )  : options === 'plan' ? (
+            <Plan />
+          ) : null
         }
       </div>
     </div>
