@@ -9,7 +9,7 @@
 }
 
 .section_dos .cardsContainer {
-  max-height: 300px;
+  max-height: 600px;
   display: flex;
   width: 130vw;
   gap: 1em;

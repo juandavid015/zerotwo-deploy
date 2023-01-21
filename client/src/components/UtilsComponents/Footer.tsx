@@ -5,15 +5,14 @@ import style from '../../style/UtilsComponents/Footer.module.css';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faGithub} from "@fortawesome/free-brands-svg-icons"
-import {faFire} from "@fortawesome/free-solid-svg-icons"
+import {faFire, faSignInAlt, faUserPlus} from "@fortawesome/free-solid-svg-icons"
 import{faEye} from "@fortawesome/free-solid-svg-icons"
 import{faMasksTheater} from "@fortawesome/free-solid-svg-icons"
-import {faUserPen} from "@fortawesome/free-solid-svg-icons"
-import {faKey } from "@fortawesome/free-solid-svg-icons"
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
     return (
-        <footer className={style['footer']}>
+        <div className={style['footer']}>
             <div className={style['footer-brand']}>
                 {/* <img src={logo} alt='zero-two brand logo' className={style['brand-logo']}/> */}
                 <h1>Zero two</h1>
@@ -23,16 +22,22 @@ const Footer = () => {
                     <h4 className={style['title']}>Explore</h4>
                     <div className={style['options']}>
                         <div className={style['option']}>
-                            <FontAwesomeIcon icon={faFire} className={style['icon']}/>
-                            <span className={style['span-links']}>Most popular</span>
+                            <Link className={style["a-dropdown"]} to="/animes/trending">
+                                <FontAwesomeIcon icon={faFire} className={style['icon']}/>
+                                <span className={style['span-links']}>Most popular</span>
+                            </Link>
                         </div>
                         <div className={style['option']}>
-                            <FontAwesomeIcon icon={faEye} className={style['icon']}/>
-                            <span className={style['span-links']}>Playing now</span>
+                            <Link className={style["a-dropdown"]} to="/animes/newest">
+                                <FontAwesomeIcon icon={faEye} className={style['icon']}/>
+                                <span className={style['span-links']}>Playing now</span>
+                            </Link>
                         </div>
                         <div className={style['option']}>
-                            <FontAwesomeIcon icon={faMasksTheater} className={style['icon']}/>
-                            <span className={style['span-links']}>Genres</span>
+                            <Link className={style["a-dropdown"]} to="/animes">
+                                <FontAwesomeIcon icon={faMasksTheater} className={style['icon']}/>
+                                <span className={style['span-links']}>Genres</span>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -40,12 +45,16 @@ const Footer = () => {
                     <h4 className={style['title']}>Account</h4>
                     <div className={style['options']}>
                         <div className={style['option']}>
-                            <FontAwesomeIcon icon={faUserPen} className={style['icon']} />
-                            <span className={style['span-links']}>Sign up</span>
+                            <Link className={style["a-dropdown"]} to="/register">
+                                <FontAwesomeIcon icon={faUserPlus} className={style['icon']} />
+                                <span className={style['span-links']}>Sign up</span>
+                            </Link>
                         </div>
                         <div className={style['option']}>
-                            <FontAwesomeIcon icon={faKey} className={style['icon']} />
-                            <span className={style['span-links']}>Sign in</span>
+                            <Link className={style["a-dropdown"]} to="/login">
+                                <FontAwesomeIcon icon={faSignInAlt} className={style['icon']} />
+                                <span className={style['span-links']}>Sign in</span>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -58,7 +67,7 @@ const Footer = () => {
                             <span className={style['user-name']}>juandavid015</span>
                             <FontAwesomeIcon icon={faGithub} />
                         </div>
-                        <span className={style['tag']}>Tag role</span>
+                        <span className={style['tag']}>FullStack</span>
                     </a>   
                 </div>
                 <div className={style['footer-profile']}>
@@ -67,38 +76,11 @@ const Footer = () => {
                             <span className={style['user-name']}>nicosanchezprev</span>
                             <FontAwesomeIcon icon={faGithub} />
                         </div>
-                        <span className={style['tag']}>Tag role</span>
+                        <span className={style['tag']}>FullStack</span>
                     </a> 
-                </div>
-                <div className={style['footer-profile']}>
-                    <a className={style['a-href']} href="https://github.com/jhoalvi25">
-                        <div className={style['user']}>
-                            <span className={style['user-name']}>jhoalvi25</span>
-                            <FontAwesomeIcon icon={faGithub} />
-                        </div>
-                        <span className={style['tag']}>Tag role</span>
-                    </a>
-                </div>
-                <div className={style['footer-profile']}>
-                    <a className={style['a-href']} href="https://github.com/Mariapaula56">
-                        <div className={style['user']}>
-                            <span className={style['user-name']}>Mariapaula56</span>
-                            <FontAwesomeIcon icon={faGithub} />
-                        </div>
-                        <span className={style['tag']}>Tag role</span>
-                    </a> 
-                </div>
-                <div className={style['footer-profile']}>
-                    <a className={style['a-href']} href="https://github.com/billyandrys">
-                        <div className={style['user']}>
-                            <span className={style['user-name']}>billyandrys</span>
-                            <FontAwesomeIcon icon={faGithub} />
-                        </div>
-                        <span className={style['tag']}>Tag role</span>
-                    </a>
                 </div>
             </div>
-        </footer>
+        </div>
     )
 };
 

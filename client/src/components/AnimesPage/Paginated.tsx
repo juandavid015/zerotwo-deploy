@@ -22,7 +22,7 @@ export default function Pagination({ totalPages, search, page}:PaginationType) {
           i++;
           myPages.push(
               <Link to={`${location.pathname}?${parseQueryPage(search, i, 'page', 'page')}`} 
-              className='page' key={i}>
+              className={style['page']} key={i}>
                    <button className={style['page']}
                                 key={i}>
                                   {i}
@@ -36,15 +36,15 @@ export default function Pagination({ totalPages, search, page}:PaginationType) {
   return (
     <div className={style['pagination-container']}>
 
-      <div className="pagination-prev">
+      <div className={style["pagination-prev"]}>
                 {
                     page - 1 > 0 ? 
-                    <div className="previous">
-                        <Link to ={`${location.pathname}?${parseQueryPage(search, page, 'page', 'page', 'prev')}`} >Previous</Link>
+                    <div className={style["pagination-prev"]}>
+                        <Link className={style["link"]} to ={`${location.pathname}?${parseQueryPage(search, page, 'page', 'page', 'prev')}`} >Previous</Link>
                     </div>:
 
-                    <div className="previous">
-                         <Link to ={`${location.pathname}?${parseQueryPage(search, page, 'page', 'page', 'prev')}`}  style={{pointerEvents: 'none', opacity: '.7'}}>Previous</Link>
+                    <div className={style["pagination-prev"]}>
+                         <Link className={style["link"] + " " + style["link-cancel"]} to ={`${location.pathname}?${parseQueryPage(search, page, 'page', 'page', 'prev')}`}>Previous</Link>
                     </div>
                 }
             </div>
@@ -56,7 +56,7 @@ export default function Pagination({ totalPages, search, page}:PaginationType) {
                         if(page === i + 1) {
                             return  ( 
                             <Link to={`${location.pathname}?${parseQueryPage(search, i, 'page', 'page')}`} 
-                            className='page' id='page-active' key={i + 1} >
+                            className={style['page']} id='page-active' key={i + 1} >
 
                                 <button className={style['page-selected']}
                                 key={page}>
@@ -70,14 +70,14 @@ export default function Pagination({ totalPages, search, page}:PaginationType) {
       }
       </div>
 
-      <div className="pagination-next">
+      <div className={style["pagination-prev"]}>
                 {
                     page + 1 > totalPages || page + 1 < 0?
-                    <div className="next">
-                        <Link to={`${location.pathname}?${parseQueryPage(search, page, 'page', 'page', 'next')}`} style={{pointerEvents: 'none', opacity: '.7'}}>Next</Link>
+                    <div >
+                        <Link className={style["link"] + " " + style["link-cancel"]} to={`${location.pathname}?${parseQueryPage(search, page, 'page', 'page', 'next')}`} >Next</Link>
                     </div>:
-                    <div className="next">
-                        <Link to={`${location.pathname}?${parseQueryPage(search, page, 'page', 'page', 'next')}`}>Next</Link>
+                    <div >
+                        <Link className={style["link"]} to={`${location.pathname}?${parseQueryPage(search, page, 'page', 'page', 'next')}`}>Next</Link>
                     </div>
                 }
             </div>

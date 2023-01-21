@@ -22,7 +22,7 @@
     background-color: var(--secondary-color-content-3);
 }
 .cover-img-container {
-    height: 60%;
+    height: 55%;
     width: 100%;
 }
 .poster-img {
@@ -33,7 +33,6 @@
 }
 
 .cover-info-container {
-    /* color: white; */
     color: var(--main-color-font-light);
     padding: 1em;
     

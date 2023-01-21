@@ -22,6 +22,7 @@ export default function Home() {
   }
 
   useEffect(() => {
+    window.scrollTo({top: 0, behavior: "smooth"});
     dispatch(getAnimes(""));
     dispatch(getAnimeNewest("?page=1"));
     dispatch(getAnimeTrending("?page=1"));

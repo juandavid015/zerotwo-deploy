@@ -22,7 +22,7 @@ import Payments from "./components/Payments/Payments";
 import Login from "./components/Login_and_Register/Login";
 import Register from "./components/Login_and_Register/Register";
 import EpisodeDetails from "./components/EpisodeDetails/EpisodeDetails";
-import Loading from "./components/UtilsComponents/Footer";
+import Loading from "./components/UtilsComponents/Loading";
 import UserDashboard from "./components/User/UserDashboard";
 import MyList from "./components/User/Options/MyList";
 import ListDetail from "./components/User/Options/ListDetail";
@@ -71,11 +71,7 @@ const App: React.FC = () =>  {
   return (
     <BrowserRouter>
       <div className="App">
-        {/* {location.pathname === "/" ? (
-          <NavBar bgColor="transparent" underline={true} />
-        ) : ( */}
-          <NavBar />
-        {/* )} */}
+        <NavBar />
 
         <Switch>
           <Route exact path="/" component={LandingPage} />
@@ -99,9 +95,7 @@ const App: React.FC = () =>  {
           <Route exact path="/profile/admin" component={Admin} />
 
           <Route path='*' component={NotFound} />
-          
         </Switch>
-
         <Footer />
       </div>
     </BrowserRouter>

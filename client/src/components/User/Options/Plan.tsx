@@ -1,15 +1,15 @@
-import { useAuth0, User } from "@auth0/auth0-react";
-import { useCallback, useEffect, useState } from "react";
+// import { useAuth0, User } from "@auth0/auth0-react";
+import {  useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 import {
-  executePaymentGenin,
-  executePaymentChuunin,
-  executePaymentJounin,
+  // executePaymentGenin,
+  // executePaymentChuunin,
+  // executePaymentJounin,
   executePayment,
-  getUserResourceWithGoogle,
-  getUserResource,
+  // getUserResourceWithGoogle,
+  // getUserResource,
   updateUser,
 } from "../../../redux/actions";
 import {  useAppDispatch, useAppSelector } from "../../../redux/hooks";
@@ -24,7 +24,7 @@ export default function Plan() {
   const history = useHistory();
 
   let userDB = useAppSelector((state) => state["user"]);
-  const { isLoading, getAccessTokenSilently, user } = useAuth0<User>();
+  // const { isLoading, getAccessTokenSilently, user } = useAuth0<User>();
   const [preAlert, setPreAlert] = useState(false);
   const [postAlert, setPostAlert] = useState(false);
 
@@ -43,9 +43,9 @@ export default function Plan() {
     history.push("/profile/plan");
   };
   
-  const getRegularToken = useCallback(async () => {
-    return window.localStorage.getItem('token')  
-  }, [])
+  // const getRegularToken = useCallback(async () => {
+  //   return window.localStorage.getItem('token')  
+  // }, [])
 
   
 
@@ -78,7 +78,5 @@ export default function Plan() {
       <PlanCard {...userDB}/>
       </>
     );
-    {/* <h2>{userDB.token}</h2> */}
-  
   }
 }

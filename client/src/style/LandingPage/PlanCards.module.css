@@ -36,8 +36,9 @@
     font-size: 15px;
 }
 
-.cardPlan h3 {
+.pack-price {
   color: var(--main-color-font-dark);
+  margin: 10px;
 }
 
 .cardPlan ul li:before {
@@ -58,9 +59,4 @@
   color: var(--secondary-color-content-3);
   background-color: var(--secondary-color-items-1);
   cursor: pointer;
-}
-
-.cardPlan h3{
-    color: var(--main-bg-color-light);
-    margin: 10px;
 }

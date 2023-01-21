@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import style from "../../style/Login_and_Register/Login.module.css";
 import { Link } from "react-router-dom";
@@ -30,6 +30,10 @@ export default function Login(): JSX.Element {
 
   const [user, setUser] = useState(initialValues);
   // const [error ,setError] = useState({message: ''});
+
+  useEffect(() => {
+    window.scrollTo({top: 0, behavior: "smooth"});
+  })
 
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
 

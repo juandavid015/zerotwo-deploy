@@ -1,19 +1,20 @@
 import style from "../../style/LandingPage/PlanCards.module.css";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { useAppDispatch } from "../../redux/hooks";
+// import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import {
-  createPaymentGenin,
-  createPaymentChuunin,
-  createPaymentJounin,
+  // createPaymentGenin,
+  // createPaymentChuunin,
+  // createPaymentJounin,
   createPayment,
 } from "../../redux/actions/index";
-import { useEffect, useRef } from "react";
-import { useHistory } from "react-router-dom";
+// import { useEffect, useRef } from "react";
+// import { useHistory } from "react-router-dom";
 
 export default function PlanCards(): JSX.Element {
-  const scrollCard = useRef();
-  let userDB = useAppSelector((state) => state["user"]);
+  // const scrollCard = useRef();
+  // let userDB = useAppSelector((state) => state["user"]);
   let dispatch = useAppDispatch();
-  let history = useHistory();
+  // let history = useHistory();
 
 
   const handleSubmit = async (plan: string) => {
@@ -68,7 +69,7 @@ export default function PlanCards(): JSX.Element {
             VIP
           </button>
 
-          <h3>1.50 USD</h3>
+          <h3 className={style["pack-price"]}>1.50 USD</h3>
           <ul>
             <li>No ads</li>
             <li>Unlimited access to the ZeroTwo library</li>
@@ -83,7 +84,7 @@ export default function PlanCards(): JSX.Element {
             VIP
           </button>
 
-          <h3>3.00 USD</h3>
+          <h3 className={style["pack-price"]}>3.00 USD</h3>
           <ul>
             <li>No ads</li>
             <li>Unlimited access to the ZeroTwo library</li>
@@ -99,7 +100,7 @@ export default function PlanCards(): JSX.Element {
             VIP
           </button>
 
-          <h3>36.00 USD</h3>
+          <h3 className={style["pack-price"]}>36.00 USD</h3>
           <ul>
             <li>No ads</li>
             <li>Unlimited access to the ZeroTwo library</li>

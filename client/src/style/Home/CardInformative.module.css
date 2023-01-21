@@ -30,13 +30,18 @@
 }
 
 .cardInformative-first .about {
-    padding: 1em;
     height: fit-content;
     height: 20%;
     vertical-align: middle;
     background-color: var(--secondary-color-content-1);
+    text-overflow: ellipsis;
 }
 
+.about-title {
+    padding: .5em;
+    height: 100%;
+    overflow: hidden;
+}
 
 .cardInformative-image-container {
     width: 100%;

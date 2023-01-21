@@ -1,6 +1,5 @@
 import style from '../../../style/User/Options/PrePaymentAlert.module.css';
-import img from '../../../img/animeImg1.png'
-import { Link } from 'react-router-dom';
+import img from '../../../img/animeImg1.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 

@@ -25,8 +25,8 @@ export default function CardInformative({
           />
         </div>
         <div className={style["about"]}>
-          <Link to={"/animes/" + id}>
-            <h4>{name}</h4>
+          <Link className={style["about-title"]} to={"/animes/" + id}>
+            <h4 className={style["about-title"]}>{name}</h4>
           </Link>
         </div>
       </div>

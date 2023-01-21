@@ -35,9 +35,29 @@
   border-style: none;
 }
 
-
+.page{
+  transition: all ease 0.3s;
+}
 .page:hover {
   background-color: var(--secondary-color-content-1);
   color: var(--main-color-font-dark2);
 }
 
+.pagination-prev{
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.link{
+  background-color: var(--secondary-color-content-1);
+  text-decoration: none;
+  width: 100%;
+  padding: 1em;
+  color: var(--main-color-font-dark);
+}
+
+.link-cancel{
+  background-color: #e9dcf79a;
+}

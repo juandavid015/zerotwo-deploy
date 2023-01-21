@@ -42,8 +42,7 @@ body::-webkit-scrollbar-thumb {
 .section_newAnimes {
   width: 95%;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-  
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   gap: 2em;
 }
 .section_link {
@@ -56,7 +55,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .down:hover {
-  animation: increseArrow 1.8s infinite;
+  animation: increseArrow 1.4s infinite;
 }
 
 @keyframes increseArrow {

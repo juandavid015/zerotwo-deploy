@@ -21,12 +21,16 @@
   object-fit: cover;
 }
 .cardBasic-about {
-  height: 80px;
+  height: 120px;
   background-color: var(--secondary-color-content-1);
   padding: 0.5em;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.title {
+  text-align: center;
 }
 
 .cardBasic-about .title {

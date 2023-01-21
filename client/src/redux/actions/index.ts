@@ -201,7 +201,20 @@ export const registerUser = (user: User) => {
         },
         data: user,
       };
-      await axios(config);
+      await axios(config).then(
+        function (value) {
+          // Success!
+          return value.data;
+        },
+        function (err) {
+          // Error!
+          console.log('err:  ',err)
+          console.log('err.response:  ',err.response)
+          console.log('err.response.data:  ', err.response.data);
+          throw new Error(err.response.data);
+          
+        }
+      );;
     } catch (err: any) {
       throw new Error(err.message);
     }

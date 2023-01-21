@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import style from "../../style/Login_and_Register/Register.module.css";
 import { Link } from "react-router-dom";
@@ -10,6 +10,9 @@ import { useHistory } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
+import { faClose } from "@fortawesome/free-solid-svg-icons";
+import imgNotFound from "../../img/png_image_notListFound.png";
+
 interface FormValues {
   nickname: string;
   age: number;
@@ -28,8 +31,14 @@ export default function Register(): JSX.Element {
     confirmPassword: "",
   };
   const [isLoading, setIsLoading] = useState(false);
+  const [errorReg, setErrorReg] = useState("");
   const [user, setUser] = useState(initialValues);
   const {loginWithRedirect} = useAuth0();
+
+  useEffect(() => {
+    window.scrollTo({top: 0, behavior: "smooth"});
+  })
+
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
 
     const inputName = e.target.name;
@@ -62,7 +71,7 @@ export default function Register(): JSX.Element {
       
     }).catch(err => {
       setIsLoading(false);
-      alert('An error has ocurred')
+      setErrorReg(err.message);
       setUser({
         nickname: "",
         age: 0,
@@ -72,11 +81,16 @@ export default function Register(): JSX.Element {
       })
     });
 
-    
-
     // No se esta seteando correctamente los inputs a su valor inicial
     // CHEQUEAR QUE FUNCIONE
   };
+
+
+  const toggleModal = () => {
+    setErrorReg("");
+  };
+
+
   return (
     <div className={style['form-signup-container']}>
      
@@ -157,10 +171,10 @@ export default function Register(): JSX.Element {
           <button type="submit" className={style["signup-btn"]} disabled={isLoading ? true: false}>
             Sign up
           </button>
-          <p> 
-            Already have an account?{" "}
+          <p className={style["signup-btn_p"]}> 
+            Already have an account?
             <Link to={"login"} className={style["link"]}>
-              <span>Log In</span>
+              <span>  Log In</span>
             </Link>
            
           </p>
@@ -179,6 +193,22 @@ export default function Register(): JSX.Element {
       <div className={style['aside-background']}>
           <img src={sideAnimeImg} alt="anime img" className={style['anime-img']}/>
       </div>
+      {
+        errorReg ? 
+        (
+          <div className={style['modal']}>
+          <div onClick={toggleModal} className={style['overlay']}></div>
+            <div className={style['modal-content']}>
+              <h4 className={style['title-modal']}>{errorReg}</h4>
+              <img className={style['img-notFound']} src={imgNotFound} alt="img_notFound" />
+              <button onClick={toggleModal} className={style['button-create-list-modal']}>
+                <FontAwesomeIcon icon={faClose} />
+                Close
+              </button>
+            </div>
+          </div>   
+        ) : null
+      }
     </div>
   );
 }

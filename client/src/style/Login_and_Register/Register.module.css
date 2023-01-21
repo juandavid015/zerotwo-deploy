@@ -1,7 +1,7 @@
 .form-signup-container {
   display: flex;
   flex-direction: row-reverse;
-  min-height: calc(100vh - 54px);
+  min-height: 100vh;
   width: 70%;
   color: var( --main-color-font-dark);
   box-sizing: border-box;
@@ -9,9 +9,6 @@
   margin: auto;
   font-size: 16px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-}
-.form-signup-container > * {
-  margin-top: 2em;
 }
 .form-signup {
   width: 65%;
@@ -55,8 +52,13 @@
   opacity: .5;
 }
 .form-signup .link {
+  color: var(--main-color-font-dark);
+}
+
+.signup-btn_p {
   color: var(--main-color-font-dark2);
 }
+
 .login-google-btn {
   gap: .5em;
   background-color: var(--main-bg-color-light);
@@ -84,6 +86,67 @@
   height: 100%;
   object-fit: cover;
 }
+
+
+.modal, .overlay {
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+}
+  
+.overlay {
+    background: rgba(49, 49, 49, 0.89);
+}
+.modal-content {
+    z-index: 900;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 1.4;
+    background: #f1f1f1;
+    padding: 14px 28px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    row-gap: 1em;
+    width: 500px;
+    height: auto;
+}
+
+.title-modal{
+    color: var(--main-color-font-dark);
+    text-align: center;
+}
+
+.button-create-list-modal{
+  border: 2px solid var(--secondary-color-content-3);
+  color: var(--secondary-color-content-3);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.356);
+  background-color: transparent;
+  padding: .5em;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  column-gap: .5em;
+  transition: all ease 0.3s;
+  margin-top: -20px;
+}
+
+
+.img-notFound{
+  width: 150px;
+  height: 150px;
+}
+
 /* .form {
   display: inline-flex;
   flex-direction: column;

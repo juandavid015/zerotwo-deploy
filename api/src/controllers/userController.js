@@ -10,7 +10,6 @@ exports.getUser= async (req, res) => {
         res.status(200).send(user);
         
     } catch (err) {
-        console.log(err)
         res.status(404).send(err.message)
     }
 }
@@ -59,8 +58,7 @@ exports.createUser = async (req, res) => {
         const userCreated = await userServices.createUser(user);
         res.status(201).send({msg: 'You are almost ready, please verify you email', data: userCreated});
     } catch (err) {
-        console.log('ERROR CONTROLLER: ', err)
-        res.status(409).send(err.message)
+        res.status(404).send(err.message)
     }
 }
 

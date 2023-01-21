@@ -12,9 +12,9 @@ export default function EpisodeDetails () {
     const dispatch = useAppDispatch();
     const episode = useAppSelector(state => state.animeEpisode)
 
-  
     useEffect(()=> {
-        dispatch(getAnimeEpisode(idAnime, idEpisode))
+        window.scrollTo({top: 0, behavior: "smooth"});
+        dispatch(getAnimeEpisode(idAnime, idEpisode));
     },[dispatch, idEpisode, idAnime])
 
     return(
