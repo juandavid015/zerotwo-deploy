@@ -4,7 +4,6 @@ exports.get_Animes = async (req, res) => {
   
 let reqHasQuery = Object.entries(req.query).length;
   try {
-    // console.log(req.query);
     if (reqHasQuery) {
       const allAnimes = await animeServices.get_animes_by_query(req.query);
       res.status(200).send(allAnimes);
@@ -32,7 +31,7 @@ exports.require_Anime = async (req, res) => {
 exports.require_Newest = async (req, res) => {
   try {
     const {sort, page} = req.query;
-    console.log(sort,page)
+    
     let animesNewest;
     sort ? animesNewest = await animeServices.get_animes_newest(sort): page ? animesNewest = await animeServices.get_animes_newest(null, page)
      : animesNewest = await animeServices.get_animes_newest();
@@ -48,7 +47,6 @@ exports.require_Newest = async (req, res) => {
 exports.require_Trending = async (req, res) => {
   try {
     const {sort, page} = req.query;
-    console.log(sort,page)
     let animesNewest = await animeServices.get_animes_trending(sort, page);
     if(!animesNewest) {
       res.status(400).send("FALLO EL FILTRADO");

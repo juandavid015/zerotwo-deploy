@@ -24,7 +24,6 @@ exports.fillAnimeModel = async () => {
 
     } else {
       const allAnimes = await utils.getAllAnime();
-      console.log('NUMERO DE ANIMES:', allAnimes.length);
 
       await Promise.all(allAnimes.map(async anime => {
         const auxGenres = anime.genres;
@@ -46,7 +45,6 @@ exports.fillAnimeModel = async () => {
 exports.get_animes_by_query = async (query) => {
   
   await this.fillAnimeModel();
-  console.log(query)
   let limit = query.limit ? query.limit: 15;
   let page = query.page ? query.page: 1;
   let sort = query.sort ? query.sort: 'asc';
@@ -60,7 +58,6 @@ exports.get_animes_by_query = async (query) => {
     [Op.iLike]: `%${query.name}%`
   } : {};
  
-  // console.log(query)
   let options = {
     where: query,
     
@@ -73,7 +70,6 @@ exports.get_animes_by_query = async (query) => {
     order: [['name', sort], [Genre, 'id', 'asc']],
 
   }
-  // console.log(query.page)
   if(query.page) {
     options.limit = limit ;
     options.offset = (limit * (page - 1));
@@ -133,7 +129,6 @@ exports.get_animes_newest = async (sort, page) => {
   try {
     let pageSort = page ? Number(page) : 1
     if (page) {
-      console.log('PAGE', page)
       page = Number(page);
       options.limit = 15 || limit
       options.offset = (limit * (page - 1)) || 0

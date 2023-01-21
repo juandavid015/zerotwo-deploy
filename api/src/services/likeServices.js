@@ -21,7 +21,6 @@ exports.changeLikeStatus = async (userId, commentId) => {
                 return ('Like change and created')
                 
             } else {
-                console.log(likeToChange)
                 likeToChange.created = !likeToChange.created;
                 await likeToChange.save();
 
@@ -30,7 +29,6 @@ exports.changeLikeStatus = async (userId, commentId) => {
             
         }
       } catch (err) {
-        console.log(err)
         throw new Error('Like could not be modify')
       }
 }

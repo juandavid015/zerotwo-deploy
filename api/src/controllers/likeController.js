@@ -7,7 +7,6 @@ exports.patchLike = async (req, res) => {
         const likeChange = await likeServices.changeLikeStatus(userId, commentId)
         res.status(200).send(likeChange);
     } catch (err) {
-        console.log(err)
         res.status(404).send(err.message)
     }
 }

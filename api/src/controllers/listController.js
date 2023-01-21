@@ -16,7 +16,6 @@ exports.getListFavorites = async (req, res) => {
     const info = await listService.getFavorites(id);
     res.status(200).send(info);
   } catch (error) {
-    console.log('ERROR', error);
     res.status(404).send(error.message);
   }
 }
@@ -39,7 +38,6 @@ exports.postList= async (req, res) => {
     const info = await listService.postListDb(listInfo);
     res.status(200).send(info);
   } catch (err) {
-    console.log(err)
     res.status(404).send(err.message)
   };
 };

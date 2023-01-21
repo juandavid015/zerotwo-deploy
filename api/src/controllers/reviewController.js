@@ -4,7 +4,6 @@ exports.postComment = async (req, res) => {
     let comment = req.body;
     let userNickname = req.body.nickname;
     delete comment.nickname
-    console.log(userNickname)
     try {
         const commentAdded = await reviewServices.addComment(comment, userNickname);
         res.status(200).send(commentAdded);
@@ -18,7 +17,6 @@ exports.postReply = async (req, res) => {
     let espisodeId = req.params.episodeId;
     let idComment = req.params.idComment;
     delete reply.nickname
-    console.log(userNickname)
     try {
         const replyAdded = await reviewServices.addReply(reply, userNickname, espisodeId, idComment);
         res.status(200).send(replyAdded);
@@ -64,12 +62,10 @@ exports.patchComment = async (req, res) => {
     let episodeId = req.params.episodeId;
     let commentId = req.params.commentId;
     let content = req.body.content
-    console.log(req.body)
     try {
         const commentEdited = await reviewServices.editPost(episodeId, commentId, content)
         res.status(200).send(commentEdited);
     } catch (err) {
-        console.log(err.message)
         res.status(404).send(err.message)
     }
 }

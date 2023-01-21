@@ -26,38 +26,7 @@ export default function PlanCards(): JSX.Element {
       console.log(error);
     }
   };
-  // const handleSubmitGenin = async () => {
-  //   try {
-  //     await dispatch(createPaymentGenin()).then((val: any) => {
-  //       window.location.href = val.data.data;
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // const handleSubmitChuunin = async () => {
-  //   try {
-  //     await dispatch(createPaymentChuunin()).then((val: any) => {
-     
-  //       window.location.href = val.data.data;
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // const handleSubmitJounin = async () => {
-  //   try {
-  //     await dispatch(createPaymentJounin()).then((val: any) => {
-        
-  //       window.location.href = val.data.data;
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-  // useEffect(() => {}, [dispatch, user]);
+  
   return (
     <div id="planCards" className={style["title"]}>
       <h1>Our premium offerts:</h1>

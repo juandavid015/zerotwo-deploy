@@ -61,8 +61,6 @@ const App: React.FC = () =>  {
     getRegularToken();
   }, [getRegularToken, getUserInfo, getToken, dispatch]);
 
-  console.log('USER', user)
-
   if (isLoading) {
     return (
       <Loading />

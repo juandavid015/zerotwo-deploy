@@ -3,7 +3,6 @@ import axios from "axios";
 import { AppDispatch } from "../store";
 import { User } from "@auth0/auth0-react";
 import { CommentInterface } from "../../types/types";
-import { string } from "yup";
 
 const API_ENDPOINT =
   process.env.REACT_APP_API_ENDPOINT || "http://localhost:3001";
@@ -85,7 +84,6 @@ export const getAnimeEpisode = (
 export const getEpisodeStreamingUrl = (animeName: string, episodeNumber:number) => {
   return async (dispatch: AppDispatch) => {
     try {
-      console.log('animename', animeName)
       animeName = animeName.replace(/[^\w]/g, "-").split('-').join(' ');
       let res = await axios.get(`${API_ENDPOINT}/episodes/${animeName}/${episodeNumber}/streaming`)
       return res.data
@@ -221,9 +219,6 @@ export const registerUser = (user: User) => {
         },
         function (err) {
           // Error!
-          console.log('err:  ',err)
-          console.log('err.response:  ',err.response)
-          console.log('err.response.data:  ', err.response.data);
           throw new Error(err.response.data);
           
         }

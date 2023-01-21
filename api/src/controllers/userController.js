@@ -17,13 +17,11 @@ exports.getUser= async (req, res) => {
 exports.getUserWithGoogle = async (req, res) => {
 
     let userInfo = req.body;
-    console.log('UI', userInfo)
     try {
         const user = await userServices.getUserInfoWithGoogle(userInfo);
         res.status(200).send(user);
         
     } catch (err) {
-        console.log(err)
         res.status(404).send(err.message)
     }
 }
@@ -35,7 +33,6 @@ exports.loginUser = async (req, res) => {
         const user = await userServices.loginUser(userEmail, userPassword);
         res.status(200).send(user);
     } catch (err) {
-        console.log(err)
         res.status(404).send(err.message)
     }
 }

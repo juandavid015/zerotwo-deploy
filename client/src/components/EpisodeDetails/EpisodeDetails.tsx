@@ -11,7 +11,8 @@ import NotFound from '../UtilsComponents/NotFound';
 export default function EpisodeDetails () {
     const {idAnime, idEpisode, animeName} = useParams();
     const dispatch = useAppDispatch();
-    const episode = useAppSelector(state => state.animeEpisode)
+    const episode = useAppSelector(state => state.animeEpisode);
+    const userInfo = useAppSelector(state => state.user);
     const [streamingUrl , setStreamingUrl] = useState('');
     const [streamLoaded, setStreamLoaded] = useState(false);
     const [loading, setLoading] = useState(false)
@@ -42,16 +43,18 @@ export default function EpisodeDetails () {
             style={{backgroundImage: `linear-gradient(61deg, rgba(0,0,0,0.8799894957983193) 0%, rgba(19,19,20,0.7903536414565826) 100%, rgba(252,252,255,0.3757878151260504) 100%, rgba(101,5,196,1) 100%, rgba(40,10,88,1) 100%),
             url(${episode.coverImage})`}}>
                 {/* <FontAwesomeIcon icon={faPlay} onClick={()=> stremingEpisode(animeName, episode.number)}/> */}
-                {streamLoaded && streamingUrl.length ? 
+                {userInfo.email ? streamLoaded && streamingUrl.length ? 
                 <div className={style['iframe']}>
                     <iframe src={streamingUrl}  allowFullScreen  allow="autoplay; fullscreen;"  title='Streaming video'/>;
-                </div>: streamLoaded && !streamingUrl.length ?
+                </div> : streamLoaded && !streamingUrl.length ?
 
                 <NotFound msg='We are sorry the episode you want to watch is not available right now' color='#F4F0F8'/>:
                 
                 <div className={style['stream-loading']}>
                     <FontAwesomeIcon icon={faCircleNotch} />  
-                </div>}
+                </div> :
+                <NotFound msg='Login if you want to watch this episode' color='#F4F0F8'/>
+                }
               
             </div>
 

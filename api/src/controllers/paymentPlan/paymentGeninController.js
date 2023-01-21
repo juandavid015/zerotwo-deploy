@@ -61,7 +61,6 @@ const executePayment = async (req, res, next) => {
     );
     next();
   } catch (error) {
-    console.log(error)
     res.status(404).send("Invalid payment");
   }
 };
@@ -74,7 +73,6 @@ const purchase = async (req, res) => {
     res.status(200).send(userPay);
   } catch (e) {
     throw new Error(e.message);
-    // console.log(e.message);
   }
   
 };
@@ -107,7 +105,6 @@ const createPaymentGenin = async (req, res) => {
     },
   });
 
-  console.log(result.data);
   res.json({ data: result.data.links[1].href });
 
   //res.send("Creating order");
@@ -121,7 +118,6 @@ const geninToken = async (req, res) => {
     res.status(200).send(userPay);
   } catch (e) {
     throw new Error(e.message);
-    // console.log(e.message);
   }
   
 };
@@ -144,7 +140,6 @@ const executePaymentGenin = async (req, res, next) => {
     );
     next();
   } catch (error) {
-    console.log(error)
     res.status(404).send("Invalid payment");
   }
 };

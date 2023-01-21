@@ -38,7 +38,6 @@ const createPaymentChuunin = async (req, res) => {
     },
   });
 
-  console.log(result.data);
   res.json({ data: result.data.links[1].href });
 
   //res.send("Creating order");
@@ -73,7 +72,6 @@ const executePaymentChuunin = async (req, res, next) => {
     );
     next();
   } catch (error) {
-    // console.log(error)
     res.status(404).send("Invalid payment");
   }
 };

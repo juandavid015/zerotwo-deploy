@@ -96,7 +96,6 @@ export default function Comment ({id, replyingTo, content, rating, likes, spoile
         newPost.nickname = actualUser.nickname;
         newPost.replyingTo = user.nickname;
         setPost(newPost);
-        console.log(post)
     }
   
     return (

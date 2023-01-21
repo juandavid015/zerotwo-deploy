@@ -38,7 +38,6 @@ const createPayment = async (req, res) => {
     },
   });
 
-  console.log(result.data);
   res.json({ data: result.data.links[1].href });
 
   //res.send("Creating order");
@@ -61,7 +60,6 @@ const executePayment = async (req, res, next) => {
     );
     next();
   } catch (error) {
-    console.log(error)
     res.status(404).send("Invalid payment");
   }
 };
@@ -74,7 +72,6 @@ const purchase = async (req, res) => {
     res.status(200).send(userPay);
   } catch (e) {
     throw new Error(e.message);
-    // console.log(e.message);
   }
   
 };

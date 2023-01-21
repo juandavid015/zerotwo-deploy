@@ -74,7 +74,6 @@ exports.getEpisodeStreaming = async (searchName, episodeNumber) => {
     streamingUrl = streamingUrl.data.Referer;
     return streamingUrl;
   } catch(err) {
-    console.log(err.message)
     throw new Error(err.message);
   }
 }

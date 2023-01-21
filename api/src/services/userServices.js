@@ -10,9 +10,7 @@ const CLIENT_ORIGIN_URL = process.env.CLIENT_ORIGIN_URL;
 const SERVER_URL = process.env.SERVER_URL;
 
 exports.getUserInfoWithGoogle = async (user) => {
-  console.log('HE', user)
   let email = user.email
-  console.log('email', email)
   try {
     const userFounded = await User.findOne({ where: { email: email, email_verified: true, registered: true } });
     if (!userFounded) {
@@ -25,7 +23,6 @@ exports.getUserInfoWithGoogle = async (user) => {
       userGoogle.image = user.picture;
 
       let userCreated = await User.create(userGoogle);
-      console.log('USER CREATED:', userCreated)
       return userCreated
     } else {
       if (userFounded.permissions === "Banned") throw new Error("User has been banned");
@@ -71,7 +68,6 @@ exports.getUserInfo = async (token, email) => {
 };
 
 exports.loginUser = async (email, password) => {
-  console.log("email", email);
   try {
     const user = await User.findOne({
       where: { email: email, email_verified: true, registered: true },
@@ -81,7 +77,6 @@ exports.loginUser = async (email, password) => {
       if (user.permissions === "Banned")
         throw new Error("User has been banned");
       let hashedPassword = user.password;
-      console.log("hashed", hashedPassword, password);
       let passwordIsValid = await comparePassword(password, hashedPassword);
       if (passwordIsValid) {
         if (user.email_verified && user.registered) {
@@ -102,7 +97,6 @@ exports.loginUser = async (email, password) => {
 };
 
 exports.verifyUser = async (token, email) => {
-  console.log("email", email);
   try {
     const user = await User.findOne({ where: { email: email } });
     if (!user) {
@@ -117,16 +111,13 @@ exports.verifyUser = async (token, email) => {
           else {
             user.email_verified = true;
             user.registered = true;
-            console.log(verified);
             await user.save();
-            console.log(verified);
             return user;
           }
         }
       );
     }
   } catch (err) {
-    console.log("aa", err);
     throw new Error(err.message);
   }
 };
@@ -165,8 +156,6 @@ exports.createUser = async (user) => {
   
       const userCreated = await User.create(user);
       let token = generateToken({ email: user.email });
-      console.log(token);
-      console.log(user);
       const message = `${SERVER_URL || 'http://localhost:3001'}/user/verify/${email}/${token}`;
       await sendEmail(email, "Zero Two: Verify your account", message);
       return userCreated;
@@ -201,49 +190,8 @@ exports.defineCategory = async (id, token, plan) => {
     await userX.save();
     return userX;
   } catch (error) {
-    console.log(error.message);
   }
 };
-
-
-// exports.defineCategoryGenin = async (id, token) => {
-//   try {
-//     let userX = await User.findOne({ where: { id } });
-//     userX.token = token;
-//     userX.plan = "1";
-
-//     await userX.save();
-//     return userX;
-//   } catch (error) {
-//     console.log(error.message);
-//   }
-// };
-
-// exports.defineCategoryChuunin = async (id, token) => {
-//   try {
-//     let userX = await User.findOne({ where: { id } });
-//     userX.token = token;
-//     userX.plan = "2";
-
-//     await userX.save();
-//     return userX;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-
-// exports.defineCategoryJounin = async (id, token) => {
-//   try {
-//     let userX = await User.findOne({ where: { id } });
-//     userX.token = token;
-//     userX.plan = "3";
-    
-//     await userX.save();
-//     return userX;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
 
 
 exports.searchuser = async (name) => {
@@ -270,7 +218,6 @@ exports.searchuser = async (name) => {
 
 exports.modifyUser = async (userId, settings) => {
   let user = await User.findOne({where: {id: userId}});
-  console.log(userId, settings)
   try {
     if(!user) {
       throw new Error('User could not be founded');
@@ -295,7 +242,6 @@ exports.modifyUser = async (userId, settings) => {
           })
 
           await user.save();
-          console.log(user);
     
           return user
 
@@ -313,14 +259,12 @@ exports.modifyUser = async (userId, settings) => {
         })
 
         await user.save();
-        console.log(user);
   
         return user
       }
       
     }
   } catch(err) {
-    console.log(err)
     throw new Error(err.message);
   }
 }

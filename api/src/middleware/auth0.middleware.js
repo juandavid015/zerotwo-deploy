@@ -27,7 +27,6 @@ const verifyToken = (req, res, next) =>  {
   if (!token) return res.status(401).send({ error: 'Acceso denegado' })
   try {
        jwt.verify(token, getKey, {algorithms: 'RS256'}, function(err, verified) {
-        console.log('t', verified) // bar
         if (err) throw new Error(err.message)
         req.user = verified;
         next() 
@@ -35,7 +34,6 @@ const verifyToken = (req, res, next) =>  {
       
   } catch (error) {
       res.status(400).send({error: error.message})
-      console.log(error)
   }
 }
 

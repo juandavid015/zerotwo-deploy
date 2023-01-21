@@ -27,7 +27,6 @@ exports.getAllListInfo = async (userId) => {
 };
 
 exports.getFavorites = async (userId) => {
-  console.log('ESTO ES EL USERID:', userId);
   try {
     if(userId === null | !userId) throw new Error('The userId is NULL');
     const list = await List.findOne({
@@ -43,7 +42,6 @@ exports.getFavorites = async (userId) => {
     if(!list) throw new Error('List not found');
     return list;
   } catch (error) {
-    console.log(error);
     throw new Error(error.message);
   }
 }
@@ -95,7 +93,6 @@ exports.postListDb = async (listInfo) => {
           where: {name: listName}
         }]
       });
-      console.log('LISTCHECKUSER: ', listUserCheck);
       if(listUserCheck) {
         throw new Error('Ya existe una lista con para ese usuario')
       } else {
@@ -171,7 +168,6 @@ exports.destroyAnimeInList = async (animeToDelete) => {
     await list.removeAnime(anime);
     return 'Anime deleted succesfully';
   } catch (err) {
-    console.log(err.message);
     throw new Error(err.message);
   }
 }

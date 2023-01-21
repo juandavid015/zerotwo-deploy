@@ -36,7 +36,6 @@ export default function Plan() {
   const verifyPayment = async (tokenPlan: string, userId: string, plan: string) => {
     await dispatch(executePayment(userId, tokenPlan, plan))
     .then((val)=> {
-      console.log('UPDATE USER:' , val)
       setPostAlert(true);
       dispatch(updateUser(val))
     })
