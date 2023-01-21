@@ -7,6 +7,7 @@
 .episode-video {
     position: relative;
     height: 70vh;
+    
     background: var(--main-bg-color-dark);
     /* background: linear-gradient(61deg, rgba(0,0,0,1) 0%, rgba(19,19,20,1) 50%, rgba(252,252,255,0.3757878151260504) 100%, rgba(101,5,196,1) 100%, rgba(40,10,88,1) 100%); */
     background-size: cover;
@@ -14,6 +15,20 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    
+  
+}
+.episode-video .iframe {
+
+    height: 100%;
+    aspect-ratio: 16/9;
+    
+}
+.episode-video .iframe iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
 }
 .episode-video svg {
     color: var(--secondary-color-items-1);
@@ -55,3 +70,18 @@
 /* .comments-container {
     padding: 0em 2em; 
 } */
+
+.stream-loading svg {
+    height: 50px;
+    color: var(--secondary-color-content-1);
+    animation-name: stream-loading;
+    animation-iteration-count: infinite;
+    animation-duration: .8s;
+}
+@keyframes stream-loading {
+    from {
+        transform: rotate(0deg);
+    } to {
+        transform: rotate(360deg);
+    }
+}

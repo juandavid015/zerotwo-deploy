@@ -82,6 +82,19 @@ export const getAnimeEpisode = (
   };
 };
 
+export const getEpisodeStreamingUrl = (animeName: string, episodeNumber:number) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      console.log('animename', animeName)
+      animeName = animeName.replace(/[^\w]/g, "-").split('-').join(' ');
+      let res = await axios.get(`${API_ENDPOINT}/episodes/${animeName}/${episodeNumber}/streaming`)
+      return res.data
+    } catch(err:any) {
+      throw new Error(err.message);
+    }
+  }
+}
+
 export const getAnimeEpisodes = (id: number) => {
   return async (dispatch: AppDispatch) => {
     try {

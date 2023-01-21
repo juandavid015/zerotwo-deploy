@@ -78,7 +78,7 @@ const App: React.FC = () =>  {
           <Route exact path="/home" component={Home} />
           <Route path={["/animes/:option", "/animes"]} component={AnimeList} />
           <Route exact path="/watch/:idAnime" component={AnimeDetail} />
-          <Route exact path="/watch/:idAnime/:idEpisode" component={EpisodeDetails} />
+          <Route exact path="/watch/:idAnime/:idEpisode/:animeName" component={EpisodeDetails} />
           {/* <Route path="/profile" component={Profile} /> */}
           <Route path="/admin" component={Admin} />
           <Route exact path="/payment" component={Payments} />
