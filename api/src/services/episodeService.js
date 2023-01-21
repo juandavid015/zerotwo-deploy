@@ -1,5 +1,6 @@
 const utils = require('../utils/utils');
 const { Anime } = require('../db.js');
+const { default: axios } = require('axios');
 
 exports.getEpisode= async (idAnime, idEpisode) => {
   try {
@@ -47,5 +48,33 @@ exports.getNewestEpisodes = async (id) => {
     }
   } catch (error) {
     throw new Error(error.message);
+  }
+}
+
+exports.getEpisodeStreaming = async (searchName, episodeNumber) => {
+  try {
+    
+    let searchRegex = /[^\w]/g;
+    let searchMatcher = searchName.replace(searchRegex, "-");
+    searchMatcher = searchMatcher.toLowerCase()
+    let animesMatch = await axios.get(`https://gogoanime.consumet.org/search?keyw=${searchName}`);
+
+    // let maxCoincideIndex = 0;
+    // let matchIndex = animesMatch.data.map(anime => {
+    //   let wordsIndexMatch = searchMatcher.split('-').map(word => {
+    //     if (anime.animeId.includes(word)) return word;
+    //   })
+    //   let coincidenceIndex = wordsIndexMatch.length / anime.animeId.split('-').length ;
+    //   let prevMaxCoincideIndex = maxCoincideIndex;
+    //   maxCoincideIndex = coincidenceIndex > maxCoincideIndex ? coincidenceIndex: maxCoincideIndex;
+    //   if (coincidenceIndex > prevMaxCoincideIndex) return anime.animeId;
+    // })
+    let searchId = animesMatch.data[1].animeId;
+    let streamingUrl = await axios.get(`https://gogoanime.consumet.org/vidcdn/watch/${searchId}-episode-${episodeNumber}`);
+    streamingUrl = streamingUrl.data.Referer;
+    return streamingUrl;
+  } catch(err) {
+    console.log(err.message)
+    throw new Error(err.message);
   }
 }

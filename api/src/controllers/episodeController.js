@@ -1,4 +1,5 @@
 const episodeServices = require('../services/episodeService');
+
 exports.getEpisode = async (req, res) => {
     const { idAnime, idEpisode } = req.params;
     console.log(idAnime,idEpisode)
@@ -25,6 +26,18 @@ exports.getEpisodesNewest = async (req, res) => {
         const newestEpisodes = await episodeServices.getNewestEpisodes(id);
         res.status(200).send(newestEpisodes);
     } catch (error) {
+        res.status(404).send(error.message);
+    }
+}
+
+exports.getEpisodeStreaming = async (req, res) => {
+    const {animeName, episodeNumber} = req.params;
+    console.log(animeName, episodeNumber)
+    try {
+        const animeStreamingUrl = await episodeServices.getEpisodeStreaming(animeName, episodeNumber);
+        res.status(200).send(animeStreamingUrl);
+    } catch (error) {
+        console.log(error.message)
         res.status(404).send(error.message);
     }
 }
